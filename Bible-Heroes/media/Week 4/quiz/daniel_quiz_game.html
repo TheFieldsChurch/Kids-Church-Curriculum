@@ -1,0 +1,169 @@
+
+<style>
+  #quiz-root { font-family: var(--font-sans); padding: 1rem 0; }
+  .q-header { background: #7B4FA6; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+  .q-title { color: #fff; font-size: 15px; font-weight: 500; margin: 0; }
+  .q-counter { color: #e0c9f5; font-size: 13px; }
+  .progress-bar { background: #D4B8EC; border-radius: 4px; height: 8px; margin-bottom: 1.25rem; }
+  .progress-fill { background: #7B4FA6; border-radius: 4px; height: 8px; transition: width 0.4s ease; }
+  .q-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+  .q-text { font-size: 18px; font-weight: 500; color: var(--text-primary); margin: 0 0 1.25rem; line-height: 1.4; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn { background: var(--surface-1); border: 1.5px solid var(--border-strong); border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 15px; color: var(--text-primary); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; transition: border-color 0.15s, background 0.15s; }
+  .opt-btn:hover:not(:disabled) { border-color: #7B4FA6; background: #F3EAFB; }
+  .opt-btn .opt-label { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-width: 28px; border-radius: 50%; border: 1.5px solid var(--border-stronger); font-weight: 500; font-size: 13px; color: var(--text-secondary); }
+  .opt-btn.correct { border-color: #1D9E75; background: #E1F5EE; }
+  .opt-btn.correct .opt-label { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+  .opt-btn.wrong { border-color: #E24B4A; background: #FCEBEB; opacity: 0.7; }
+  .opt-btn.wrong .opt-label { background: #E24B4A; border-color: #E24B4A; color: #fff; }
+  .opt-btn.eliminated { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; color: var(--text-muted); border-color: var(--border); }
+  .opt-btn:disabled { cursor: not-allowed; }
+  .feedback-screen { border-radius: 12px; padding: 2rem 1.5rem; text-align: center; margin-bottom: 1rem; }
+  .feedback-screen.correct-fb { background: #E1F5EE; border: 1.5px solid #1D9E75; }
+  .feedback-screen.wrong-fb { background: #FCEBEB; border: 1.5px solid #E24B4A; }
+  .fb-icon { font-size: 48px; margin-bottom: 0.5rem; }
+  .fb-title { font-size: 28px; font-weight: 500; margin: 0 0 0.25rem; }
+  .fb-title.correct-fb { color: #0F6E56; }
+  .fb-title.wrong-fb { color: #A32D2D; }
+  .fb-sub { font-size: 15px; color: var(--text-secondary); margin: 0 0 1.25rem; }
+  .next-btn { background: #7B4FA6; color: #fff; border: none; border-radius: 10px; padding: 0.8rem 2rem; font-size: 16px; font-weight: 500; cursor: pointer; }
+  .next-btn:hover { background: #6A3F93; }
+  .retry-btn { background: #E24B4A; color: #fff; border: none; border-radius: 10px; padding: 0.8rem 2rem; font-size: 16px; font-weight: 500; cursor: pointer; }
+  .retry-btn:hover { background: #A32D2D; }
+  .done-screen { text-align: center; padding: 2rem 1rem; }
+  .done-emoji { font-size: 72px; margin-bottom: 0.5rem; }
+  .done-title { font-size: 36px; font-weight: 500; color: #7B4FA6; margin: 0 0 0.5rem; }
+  .done-sub { font-size: 16px; color: var(--text-secondary); margin: 0 0 1.5rem; }
+  .done-stars { font-size: 40px; letter-spacing: 4px; margin-bottom: 1.5rem; }
+  .restart-btn { background: #7B4FA6; color: #fff; border: none; border-radius: 10px; padding: 0.8rem 2rem; font-size: 16px; font-weight: 500; cursor: pointer; }
+  .restart-btn:hover { background: #6A3F93; }
+</style>
+
+<div id="quiz-root">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Daniel and the Lions' Den quiz game for children</h2>
+  <div id="app"></div>
+</div>
+
+<script>
+const questions = [
+  { q: "What was Daniel's job?", opts: ["He was a farmer", "He was a fisherman", "He was an important helper to the king", "He was a baker"], correct: 2 },
+  { q: "How did the bad men feel about Daniel?", opts: ["They thought Daniel was their best friend", "They loved how kind Daniel was", "They were jealous because Daniel was so good at his job", "They wanted Daniel to teach them to pray"], correct: 2 },
+  { q: "What did the new law say Daniel could NOT do anymore?", opts: ["Eat his dinner", "Play outside", "Pray to God", "Talk to his friends"], correct: 2 },
+  { q: "How many times a day did Daniel pray?", opts: ["One time", "Two times", "Three times", "Ten times"], correct: 2 },
+  { q: "What happened when Daniel was thrown into the lions' den?", opts: ["The lions ate him up", "Daniel ran away", "God sent an angel to keep the lions' mouths shut", "The lions fell asleep because they were tired"], correct: 2 },
+  { q: "What did the king do all night while Daniel was in the lions' den?", opts: ["Had a big party", "Ate lots of yummy food", "Watched a show", "He couldn't sleep and didn't eat — he was worried about Daniel"], correct: 3 },
+  { q: "Who protected Daniel from the lions?", opts: ["The king's soldiers", "Daniel's friends", "God", "A zookeeper"], correct: 2 },
+  { q: "How did the king feel when Daniel was safe?", opts: ["Angry and upset", "Very happy and he praised God", "Scared and ran away", "He didn't care at all"], correct: 1 },
+  { q: "What happened to the bad men who tricked the king?", opts: ["They were sent to bed early", "The king made them say sorry", "They were thrown into the lions' den themselves", "Nothing happened to them"], correct: 2 },
+  { q: "What is the big lesson from the story of Daniel?", opts: ["Lions are very scary and we should avoid them", "We should do what our friends say", "We can trust God even when things are scary", "Kings always make the right decisions"], correct: 2 }
+];
+
+const labels = ['A', 'B', 'C', 'D'];
+let current = 0;
+let phase = 'question'; // 'question' | 'correct' | 'wrong' | 'done'
+let eliminated = [];
+
+function render() {
+  const app = document.getElementById('app');
+  if (phase === 'done') { renderDone(app); return; }
+  if (phase === 'correct') { renderCorrect(app); return; }
+  if (phase === 'wrong') { renderWrong(app); return; }
+  renderQuestion(app);
+}
+
+function renderQuestion(app) {
+  const q = questions[current];
+  const pct = Math.round((current / questions.length) * 100);
+  app.innerHTML = `
+    <div class="q-header">
+      <p class="q-title">Daniel and the Lions' Den</p>
+      <span class="q-counter">Question ${current + 1} of ${questions.length}</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="q-card">
+      <p class="q-text">${q.q}</p>
+      <div class="options">
+        ${q.opts.map((opt, i) => {
+          const isElim = eliminated.includes(i);
+          return `<button class="opt-btn${isElim ? ' eliminated' : ''}" ${isElim ? 'disabled' : ''} onclick="choose(${i})">
+            <span class="opt-label">${labels[i]}</span>
+            <span>${opt}</span>
+          </button>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function renderCorrect(app) {
+  const isLast = current === questions.length - 1;
+  app.innerHTML = `
+    <div class="q-header">
+      <p class="q-title">Daniel and the Lions' Den</p>
+      <span class="q-counter">Question ${current + 1} of ${questions.length}</span>
+    </div>
+    <div class="feedback-screen correct-fb">
+      <div class="fb-icon">🎉</div>
+      <p class="fb-title correct-fb">Correct!</p>
+      <p class="fb-sub">That's the right answer — well done!</p>
+      <button class="next-btn" onclick="nextQ()">${isLast ? 'See your result!' : 'Next question'}</button>
+    </div>`;
+}
+
+function renderWrong(app) {
+  app.innerHTML = `
+    <div class="q-header">
+      <p class="q-title">Daniel and the Lions' Den</p>
+      <span class="q-counter">Question ${current + 1} of ${questions.length}</span>
+    </div>
+    <div class="feedback-screen wrong-fb">
+      <div class="fb-icon">🙈</div>
+      <p class="fb-title wrong-fb">Try again!</p>
+      <p class="fb-sub">That one wasn't right — have another go!</p>
+      <button class="retry-btn" onclick="retry()">Try again</button>
+    </div>`;
+}
+
+function renderDone(app) {
+  app.innerHTML = `
+    <div class="done-screen">
+      <div class="done-emoji">🦁</div>
+      <p class="done-title">Well Done!!</p>
+      <div class="done-stars">⭐⭐⭐⭐⭐</div>
+      <p class="done-sub">You finished all ${questions.length} questions about Daniel and the Lions' Den!</p>
+      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:1.5rem;">God was with Daniel — and He is always with you too!</p>
+      <button class="restart-btn" onclick="restart()">Play again</button>
+    </div>`;
+}
+
+window.choose = function(i) {
+  const q = questions[current];
+  if (i === q.correct) {
+    phase = 'correct';
+  } else {
+    eliminated.push(i);
+    phase = 'wrong';
+  }
+  render();
+};
+
+window.nextQ = function() {
+  current++;
+  eliminated = [];
+  if (current >= questions.length) { phase = 'done'; } else { phase = 'question'; }
+  render();
+};
+
+window.retry = function() {
+  phase = 'question';
+  render();
+};
+
+window.restart = function() {
+  current = 0;
+  phase = 'question';
+  eliminated = [];
+  render();
+};
+
+render();
+</script>

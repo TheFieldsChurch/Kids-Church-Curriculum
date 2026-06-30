@@ -212,20 +212,36 @@ const feedbackIcon = document.getElementById('feedbackIcon');
 const feedbackTitle = document.getElementById('feedbackTitle');
 const nextBtn = document.getElementById('nextBtn');
 
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+let shuffledOrder = [];
+
 function renderQuestion() {
   const item = questions[currentQ];
   progressText.textContent = `Question ${currentQ + 1} of ${questions.length}`;
   progressFill.style.width = `${((currentQ + 1) / questions.length) * 100}%`;
   questionText.textContent = item.q;
   optionsContainer.innerHTML = '';
-  item.options.forEach((opt, idx) => {
+
+  if (shuffledOrder.length === 0) {
+    shuffledOrder = shuffle(item.options.map((_, idx) => idx));
+  }
+
+  shuffledOrder.forEach((origIdx) => {
     const btn = document.createElement('button');
     btn.className = 'option-btn';
-    btn.textContent = opt;
-    if (disabledOptions.includes(idx)) {
+    btn.textContent = item.options[origIdx];
+    if (disabledOptions.includes(origIdx)) {
       btn.disabled = true;
     }
-    btn.addEventListener('click', () => selectOption(idx));
+    btn.addEventListener('click', () => selectOption(origIdx));
     optionsContainer.appendChild(btn);
   });
 }
@@ -253,6 +269,7 @@ function showFeedback(isCorrect) {
       feedbackScreen.classList.remove('show');
       currentQ++;
       disabledOptions = [];
+      shuffledOrder = [];
       if (currentQ >= questions.length) {
         wellDoneScreen.classList.add('show');
       } else {
@@ -277,6 +294,7 @@ function showFeedback(isCorrect) {
 document.getElementById('replayBtn').addEventListener('click', () => {
   currentQ = 0;
   disabledOptions = [];
+  shuffledOrder = [];
   wellDoneScreen.classList.remove('show');
   quizBody.classList.remove('hide');
   renderQuestion();

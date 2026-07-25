@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jesus Quiz | Bible Heroes Week 6</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+      background: #f5ecd9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .quiz-card {
+      background: #fffaf0;
+      border: 3px solid #d9c9a3;
+      border-radius: 16px;
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+      width: 100%;
+      max-width: 640px;
+      padding: 26px 28px 32px;
+      position: relative;
+    }
+
+    .quiz-header {
+      text-align: center;
+      border-bottom: 2px solid #e8dcc0;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .series-tag {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #b85c9e;
+      margin-bottom: 4px;
+    }
+
+    .quiz-header h1 {
+      margin: 0;
+      font-size: 26px;
+      color: #5b3fa0;
+    }
+
+    .progress-wrap {
+      background: #e8dcc0;
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      background: #3a7d6e;
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .progress-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #7a6a48;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 22px;
+      font-weight: 700;
+      color: #5b3fa0;
+      line-height: 1.35;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 12px; }
+
+    .option {
+      background: #ffffff;
+      border: 3px solid #d9c9a3;
+      border-radius: 12px;
+      padding: 15px 18px;
+      font-size: 18px;
+      font-family: inherit;
+      color: #3a3a3a;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .option:hover:not(.dead) {
+      border-color: #3a7d6e;
+      background: #f2fbf8;
+      transform: translateY(-2px);
+    }
+
+    .option.dead {
+      text-decoration: line-through;
+      color: #b0a894;
+      background: #f0ebe0;
+      border-color: #e0d7c2;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 13px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .overlay.show { display: flex; }
+
+    .overlay .emoji { font-size: 64px; line-height: 1; margin-bottom: 14px; }
+
+    .overlay h2 { margin: 0 0 10px; font-size: 36px; color: #ffffff; }
+
+    .overlay p { margin: 0 0 22px; font-size: 19px; color: #ffffff; max-width: 420px; line-height: 1.45; }
+
+    #correctScreen { background: #3a7d6e; }
+    #wrongScreen { background: #c0392b; }
+    #wellDoneScreen { background: #5b3fa0; }
+
+    .big-btn {
+      background: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 30px;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      color: #3a3a3a;
+    }
+
+    .big-btn:hover { background: #f0ebe0; }
+
+    .stars { font-size: 34px; letter-spacing: 6px; margin-bottom: 16px; }
+
+    .hide { display: none; }
+
+    @media (max-width: 520px) {
+      body { padding: 10px; }
+      .quiz-card { padding: 20px 18px 26px; }
+      .question { font-size: 19px; }
+      .option { font-size: 16px; padding: 13px 15px; }
+      .overlay h2 { font-size: 29px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="quiz-card">
+
+    <div id="quizBody">
+      <div class="quiz-header">
+        <div class="series-tag">Bible Heroes &middot; Week 6</div>
+        <h1>Who Is the Ultimate Hero?</h1>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">Question 1 of 10</div>
+
+      <div class="question" id="questionText"></div>
+      <div class="options" id="optionsBox"></div>
+    </div>
+
+    <!-- Correct -->
+    <div class="overlay" id="correctScreen">
+      <div class="emoji">&#127881;</div>
+      <h2>Correct!</h2>
+      <p id="correctMsg">Well done!</p>
+      <button class="big-btn" id="nextBtn">Next question</button>
+    </div>
+
+    <!-- Wrong -->
+    <div class="overlay" id="wrongScreen">
+      <div class="emoji">&#129300;</div>
+      <h2>Try again!</h2>
+      <p>Not quite &mdash; have another go.</p>
+      <button class="big-btn" id="retryBtn">Back to the question</button>
+    </div>
+
+    <!-- Finished -->
+    <div class="overlay" id="wellDoneScreen">
+      <div class="stars">&#11088; &#11088; &#11088;</div>
+      <div class="emoji">&#127942;</div>
+      <h2>Well Done!!</h2>
+      <p>You found the answer! Noah, David, Esther, Daniel and Mary were all brave &mdash; but they all needed rescuing
+        too. Jesus is the Ultimate Hero. He rescued us by giving up His life, and He loves us always and forever!</p>
+      <button class="big-btn" id="replayBtn">Play again</button>
+    </div>
+
+  </div>
+
+  <script>
+    var questions = [
+      {
+        q: "Why did people need a rescuer at all?",
+        options: ["People disobeyed God, and wrong things came into the world", "People got lost in a forest", "People forgot how to talk to each other"],
+        correct: 0,
+        msg: "When people disobeyed God, all the wrong things in the world began. We needed rescuing."
+      },
+      {
+        q: "God loved His people too much to leave them. Who did He send to be the Rescuer?",
+        options: ["His Son, Jesus", "A strong soldier", "A wise teacher"],
+        correct: 0,
+        msg: "God's rescue plan was Jesus - His very own Son."
+      },
+      {
+        q: "People expected a mighty king or a powerful warrior. How did the Rescuer really arrive?",
+        options: ["As a little baby", "On a big white horse", "In a flash of lightning"],
+        correct: 0,
+        msg: "It wasn't what anyone expected - but it was exactly what God had planned."
+      },
+      {
+        q: "What makes Jesus different from every other hero?",
+        options: ["He never did anything wrong", "He was the tallest", "He could run the fastest"],
+        correct: 0,
+        msg: "Jesus was completely human and completely God - and He never once did anything wrong."
+      },
+      {
+        q: "Jesus did miracles to show He was God's Son. Which one did He do?",
+        options: ["Fed 5,000 people with five loaves and two fish", "Built a bridge in one day", "Turned a rock into gold"],
+        correct: 0,
+        msg: "He also walked on water, healed the sick, and even brought a dead man back to life!"
+      },
+      {
+        q: "A huge storm was raging. How did Jesus stop it?",
+        options: ["He told it to stop", "He rowed the boat to shore", "He put up a big sail"],
+        correct: 0,
+        msg: "Jesus just told the storm to stop - and it did. No other hero can do that."
+      },
+      {
+        q: "Jesus didn't only heal people on the outside. What did He heal on the inside?",
+        options: ["He forgave their sins", "He fixed their sore feet", "He gave them new clothes"],
+        correct: 0,
+        msg: "Jesus forgave people's sins, so they didn't have to be punished for their wrong choices."
+      },
+      {
+        q: "Jesus never did anything wrong. So why did He die on the cross?",
+        options: ["He chose to take the punishment for our sins", "He had done something bad", "Nobody could stop it happening"],
+        correct: 0,
+        msg: "Jesus died on the cross so we don't have to. He took our punishment on purpose."
+      },
+      {
+        q: "Most heroes rescue people by being strong. How did Jesus rescue us?",
+        options: ["By giving up His life for us", "By being the strongest of all", "By hiding us somewhere safe"],
+        correct: 0,
+        msg: "That's what makes Jesus the Ultimate Hero - He rescued us by dying in our place."
+      },
+      {
+        q: "Jesus came back to life! How long will He love us and stay with us?",
+        options: ["Always and forever, no matter what", "Until we do something wrong", "Only when we are being good"],
+        correct: 0,
+        msg: "The strongest, never ending, never changing kind of love - and He is with us everywhere we go."
+      }
+    ];
+
+    var currentQ = 0;
+    var disabledOptions = [];
+    var shuffledOrder = [];
+
+    var quizBody = document.getElementById('quizBody');
+    var questionText = document.getElementById('questionText');
+    var optionsBox = document.getElementById('optionsBox');
+    var progressBar = document.getElementById('progressBar');
+    var progressLabel = document.getElementById('progressLabel');
+    var correctScreen = document.getElementById('correctScreen');
+    var wrongScreen = document.getElementById('wrongScreen');
+    var wellDoneScreen = document.getElementById('wellDoneScreen');
+    var correctMsg = document.getElementById('correctMsg');
+
+    function shuffle(n) {
+      var arr = [];
+      for (var i = 0; i < n; i++) { arr.push(i); }
+      for (var j = arr.length - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var t = arr[j]; arr[j] = arr[k]; arr[k] = t;
+      }
+      return arr;
+    }
+
+    function render() {
+      var q = questions[currentQ];
+
+      if (shuffledOrder.length === 0) {
+        shuffledOrder = shuffle(q.options.length);
+      }
+
+      questionText.textContent = q.q;
+      progressLabel.textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
+      progressBar.style.width = ((currentQ) / questions.length * 100) + '%';
+
+      optionsBox.innerHTML = '';
+
+      shuffledOrder.forEach(function (originalIndex) {
+        var btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = q.options[originalIndex];
+
+        if (disabledOptions.indexOf(originalIndex) !== -1) {
+          btn.classList.add('dead');
+          btn.disabled = true;
+        } else {
+          btn.addEventListener('click', function () {
+            if (originalIndex === q.correct) {
+              correctMsg.textContent = q.msg;
+              correctScreen.classList.add('show');
+            } else {
+              disabledOptions.push(originalIndex);
+              wrongScreen.classList.add('show');
+            }
+          });
+        }
+
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    document.getElementById('retryBtn').addEventListener('click', function () {
+      wrongScreen.classList.remove('show');
+      render();
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', function () {
+      correctScreen.classList.remove('show');
+      currentQ++;
+      disabledOptions = [];
+      shuffledOrder = [];
+      if (currentQ >= questions.length) {
+        progressBar.style.width = '100%';
+        quizBody.classList.add('hide');
+        wellDoneScreen.classList.add('show');
+      } else {
+        render();
+      }
+    });
+
+    document.getElementById('replayBtn').addEventListener('click', function () {
+      currentQ = 0;
+      disabledOptions = [];
+      shuffledOrder = [];
+      wellDoneScreen.classList.remove('show');
+      quizBody.classList.remove('hide');
+      render();
+    });
+
+    render();
+  </script>
+
+</body>
+
+</html>

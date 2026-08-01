@@ -33,15 +33,6 @@
 
   <div class="content">
 
-    <!-- Arrival music: press Play as the kids come in. Same playlist plays again during craft. -->
-    <div style="text-align:center;margin:0 0 4px;">
-      <button id="pl-top" type="button"
-        style="border:none;background:#1a8c4e;color:#fff;font-size:15px;font-weight:700;padding:9px 20px;border-radius:6px;cursor:pointer;">&#9835;
-        Play music</button>
-      <div style="font-size:12px;color:#777;margin-top:5px;">Start this as the children arrive &mdash; the same
-        playlist plays again during craft.</div>
-    </div>
-
     <!-- 1. Intro -->
     <div class="segment seg-intro">
       <div class="segment-header">
@@ -127,6 +118,17 @@
             the seeds that grow in the good soil.</div>
         </div>
 
+        <p style="margin-top:16px;">Printable leader card &mdash; all the statements, answers, and the Jesus
+          Connection to finish on:</p>
+        <div style="margin-top:10px;">
+          <img src="media/week-1/images/true-false-week-1.png" alt="True or False leader card preview"
+            style="width:100%;max-width:420px;border-radius:8px;border:1px solid #ccc;display:block;" />
+        </div>
+        <a href="media/week-1/pdfs/true-false-week-1.pdf" download="True-False-Week-1.pdf"
+          style="display:inline-block;margin-top:12px;background:#1a8c4e;color:#ffffff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:7px;text-decoration:none;">
+          &#11015; Download the True/False Leader Card (PDF)
+        </a>
+
         <div class="jesus-box">
           <p><span class="jc-label">Jesus Connection:</span> In this story, the farmer who plants the seeds is like
             Jesus, sharing God&rsquo;s word with everyone. The good seed is God&rsquo;s word, and our hearts are like
@@ -206,23 +208,22 @@
         <div class="seg-time">10 min</div>
       </div>
       <div class="segment-body">
-        <div class="leader-note"><strong>Leader note:</strong> There&rsquo;s no sung/action song time this series
-          &mdash; instead, start the background playlist here and let it play quietly while the children work on their
-          craft.</div>
+        <div class="leader-note"><strong>Leader note:</strong> Start the background playlist here and let it play
+          quietly while the children work on their craft.</div>
         <!-- Background playlist: press Play once; it auto-advances through every song and loops -->
         <div id="playlist"
           style="border:1px solid #ddd;border-radius:8px;padding:14px 16px;max-width:420px;background:#fafafa;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
             <button id="pl-toggle" type="button"
-              style="border:none;background:#1a8c4e;color:#fff;font-size:15px;font-weight:700;padding:8px 16px;border-radius:6px;cursor:pointer;">&#9654;
+              style="border:none;background:#1a8c4e;color:#fff;font-size:13px;font-weight:700;padding:6px 14px;border-radius:6px;cursor:pointer;">&#9654;
               Play</button>
             <button id="pl-prev" type="button"
-              style="border:none;background:#eee;color:#333;font-size:14px;padding:8px 12px;border-radius:6px;cursor:pointer;">&#9664;&#9664;</button>
+              style="border:none;background:#eee;color:#333;font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;">&#9664;&#9664;</button>
             <button id="pl-next" type="button"
-              style="border:none;background:#eee;color:#333;font-size:14px;padding:8px 12px;border-radius:6px;cursor:pointer;">&#9654;&#9654;</button>
+              style="border:none;background:#eee;color:#333;font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;">&#9654;&#9654;</button>
             <span id="pl-now" style="font-size:13px;color:#555;"></span>
           </div>
-          <ol id="pl-list" style="margin:0;padding-left:20px;font-size:14px;color:#333;line-height:1.7;"></ol>
+          <ol id="pl-list" style="display:none;"></ol>
         </div>
         <audio id="pl-audio"></audio>
         <script>
@@ -248,7 +249,6 @@
             var listEl = document.getElementById('pl-list');
             var nowEl = document.getElementById('pl-now');
             var toggleBtn = document.getElementById('pl-toggle');
-            var topBtn = document.getElementById('pl-top');
             var i = 0;
             tracks.forEach(function (t, idx) {
               var li = document.createElement('li');
@@ -267,14 +267,12 @@
             function load(play) { audio.src = tracks[i].src; highlight(); if (play) audio.play(); }
             function setBtn() {
               toggleBtn.innerHTML = audio.paused ? '▶ Play' : '⏸ Pause';
-              if (topBtn) topBtn.innerHTML = audio.paused ? '♪ Play music' : '⏸ Pause music';
             }
             function togglePlay() {
               if (!audio.src) load(false);
               if (audio.paused) audio.play(); else audio.pause();
             }
             toggleBtn.onclick = togglePlay;
-            if (topBtn) topBtn.onclick = togglePlay;
             document.getElementById('pl-prev').onclick = function () { i = (i - 1 + tracks.length) % tracks.length; load(true); };
             document.getElementById('pl-next').onclick = function () { i = (i + 1) % tracks.length; load(true); };
             audio.onended = function () { i = (i + 1) % tracks.length; load(true); }; /* loops back to the first song */
@@ -312,6 +310,18 @@
           <li>Send it home with a reminder to keep it in the light, water it a little each day, and watch it grow over
             the week.</li>
         </ol>
+
+        <h3 style="margin-top:16px;">Memory Verse Labels</h3>
+        <p>Print, cut along the borders, and let each child stick one on their pot and write their name. One A4 sheet
+          makes 18 labels.</p>
+        <div style="margin-top:10px;">
+          <img src="media/week-1/images/memory-verse-labels-week-1.png" alt="Memory verse labels preview"
+            style="width:100%;max-width:420px;border-radius:8px;border:1px solid #ccc;display:block;" />
+        </div>
+        <a href="media/week-1/pdfs/memory-verse-labels-week-1.pdf" download="Memory-Verse-Labels-Week-1.pdf"
+          style="display:inline-block;margin-top:12px;background:#1a8c4e;color:#ffffff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:7px;text-decoration:none;">
+          &#11015; Download the Memory Verse Labels (PDF)
+        </a>
       </div>
     </div>
 

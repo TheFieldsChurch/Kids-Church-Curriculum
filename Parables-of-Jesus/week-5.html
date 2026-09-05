@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5: The Prodigal Son | Parables of Jesus</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <svg class="header-shield" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#e8462a" />
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="none"
+        stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+      <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="900" fill="white"
+        font-family="Arial">P</text>
+    </svg>
+    <div class="header-text">
+      <div class="series-tag">Parables of Jesus &middot; Week 5</div>
+      <h1>The Prodigal Son</h1>
+    </div>
+    <div class="header-meta">Ages 4&ndash;10 &middot; 35 min</div>
+  </div>
+
+  <!-- MEMORY VERSE BAR -->
+  <div class="memory-bar">
+    <strong>Memory Verse:</strong> <em>&ldquo;He was lost, and is found.&rdquo;</em> &mdash; Luke 15:24 (ESV)
+  </div>
+
+  <div class="content">
+
+    <!-- 1. Intro -->
+    <div class="segment seg-intro">
+      <div class="segment-header">
+        <div class="seg-icon">&#128075;</div>
+        <div class="seg-header-title">Intro &ndash; Coming Home</div>
+        <div class="seg-time">5 min</div>
+      </div>
+      <div class="segment-body">
+        <p><strong>Welcome back to the Parables of Jesus!</strong> Remind the children what a parable is: <em>&ldquo;A
+          parable is a short, everyday story Jesus told to teach us something big and true about God.&rdquo;</em> So far
+          we&rsquo;ve learned that God wants His word to grow in us, that Jesus is our rock, that God&rsquo;s kingdom
+          grows from something tiny, and that Jesus is the Good Shepherd who searches for the one lost sheep. This week
+          Jesus tells a story about a son who ran away from home &mdash; and the dad who couldn&rsquo;t wait to welcome
+          him back.</p>
+        <p>Get the children thinking about families, forgiveness, and being welcomed home before the story begins.</p>
+        <div class="ask-block"><strong>Ask the group:</strong> &ldquo;Have you ever been really far away from home
+          &mdash; on a holiday or a big trip? How did it feel to finally get back home?&rdquo; <em>(Let a few children
+          share.)</em></div>
+        <div class="ask-block"><strong>Ask:</strong> &ldquo;Has anyone ever done something they knew was wrong, and had
+          to say sorry? What happened when you did?&rdquo; <em>(Take a few answers.)</em></div>
+        <div class="ask-block"><strong>Ask:</strong> &ldquo;If someone in your family made a big mistake and then came
+          to say sorry, what would you want to do &mdash; stay cross, or give them a hug?&rdquo; <em>(Take a few
+          answers.)</em></div>
+        <div class="leader-note"><strong>Leader note:</strong> Today Jesus tells a story about a boy who wastes
+          everything and ends up with nothing &mdash; but the surprise of the parable isn&rsquo;t really about the boy
+          at all. It&rsquo;s about the <em>father</em>, who runs to welcome him home. Jesus is showing us exactly what
+          God is like: watching, waiting, and running to forgive anyone who comes back to Him.</div>
+      </div>
+    </div>
+
+    <!-- 2. Bible Lesson -->
+    <div class="segment seg-bible">
+      <div class="segment-header">
+        <div class="seg-icon">&#128214;</div>
+        <div class="seg-header-title">Bible Lesson &ndash; The Prodigal Son</div>
+        <div class="seg-time">10 min</div>
+      </div>
+      <div class="segment-body">
+        <p><strong>Bible passage:</strong> Luke 15:11&ndash;32</p>
+        <p>Watch the video together, then play the on-screen quiz below.</p>
+        <a class="video-btn" id="video-open" href="https://youtu.be/kfDfMZ6MTJs" target="_blank">&#9654;&#xFE0E; Watch the Bible Story Video</a>
+
+        <!-- Full-screen video player (opens on click; falls back to the YouTube link if scripts are off) -->
+        <div id="video-overlay"
+          style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:9999;align-items:center;justify-content:center;">
+          <button id="video-close" title="Close (Esc)"
+            style="position:absolute;top:16px;right:20px;background:rgba(255,255,255,0.15);color:#fff;border:none;font-size:30px;line-height:1;width:48px;height:48px;border-radius:50%;cursor:pointer;">&times;</button>
+          <div style="width:92vw;max-width:1600px;aspect-ratio:16/9;">
+            <iframe id="video-frame" src="" title="The Prodigal Son &ndash; Bible Story"
+              style="width:100%;height:100%;border:0;border-radius:8px;"
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <script>
+          (function () {
+            var openLink = document.getElementById('video-open');
+            var overlay = document.getElementById('video-overlay');
+            var frame = document.getElementById('video-frame');
+            var closeBtn = document.getElementById('video-close');
+            var EMBED = 'https://www.youtube.com/embed/kfDfMZ6MTJs?autoplay=1&rel=0&modestbranding=1';
+            function openVideo(e) {
+              // YouTube's embedded player will not run from a double-clicked local file (file://) —
+              // it shows "Error 153". In that case, let the button's link open the video on YouTube
+              // in a new tab (where it plays and can go full-screen). The in-page full-screen player
+              // below is used automatically whenever the page is served from a web address (http/https).
+              if (location.protocol === 'file:') return;
+              if (e) e.preventDefault();
+              frame.src = EMBED;
+              overlay.style.display = 'flex';
+              var rf = overlay.requestFullscreen || overlay.webkitRequestFullscreen || overlay.msRequestFullscreen;
+              if (rf) { try { rf.call(overlay); } catch (err) { } }
+            }
+            function closeVideo() {
+              frame.src = '';
+              overlay.style.display = 'none';
+              var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+              if (fsEl) {
+                var xf = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                if (xf) { try { xf.call(document); } catch (err) { } }
+              }
+            }
+            openLink.addEventListener('click', openVideo);
+            closeBtn.addEventListener('click', closeVideo);
+            overlay.addEventListener('click', function (ev) { if (ev.target === overlay) closeVideo(); });
+            document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && overlay.style.display !== 'none') closeVideo(); });
+          })();
+        </script>
+
+        <h3 style="margin-top:18px;">Online Quiz &ndash; The Prodigal Son</h3>
+        <p>Eight questions to recap the video, one at a time &mdash; tap an answer, get instant feedback, and keep going
+          until you reach <strong>&ldquo;Well Done!&rdquo;</strong> Great on the big screen for the whole group to play
+          together.</p>
+        <a class="video-btn" href="week-5-quiz.html" target="_blank" style="background:#5b3fa0;">&#9654;&#xFE0E; Play the Prodigal Son Quiz</a>
+
+        <div class="jesus-box">
+          <p><span class="jc-label">Jesus Connection:</span> In this story the father is like God. Even though the son
+            ran away and made a mess of everything, the father was watching and waiting &mdash; and the moment he saw
+            his son coming home, he <em>ran</em> to him. That&rsquo;s exactly how God feels about us. Jesus came to bring
+            lost people home to God, and because He died and rose again, God can run to welcome us, forgive us
+            completely, and celebrate every time someone comes back to Him. You are never, ever too far away for God to
+            welcome you home.</p>
+        </div>
+
+        <!-- Prayer -->
+        <div
+          style="background:#fff8f0;border-left:4px solid #c0392b;border-radius:8px;padding:16px 20px;margin-top:20px;">
+          <h3 style="color:#c0392b;margin:0 0 10px 0;font-size:1.1em;">🙏 Prayer</h3>
+          <p style="margin:0;color:#333;line-height:1.6;">
+            Dear God, thank you that you are like the running father &mdash; always watching, always ready to forgive.
+            Thank you that no matter what we have done, we can always come home to you. Thank you for Jesus, who died and
+            rose again to make a way for us to be welcomed into your family forever. Help us to run to you. Amen.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. Game -->
+    <div class="segment seg-game">
+      <div class="segment-header">
+        <div class="seg-icon">&#127918;</div>
+        <div class="seg-header-title">Game &ndash; Find Your Way Home</div>
+        <div class="seg-time">5 min</div>
+      </div>
+      <div class="segment-body">
+        <p><strong>This week the game comes straight after the video and true-or-false.</strong> The son had a long,
+          hard journey from the pig pen all the way home. In this game the children walk that winding road from
+          <strong>&ldquo;Lost&rdquo;</strong> to <strong>&ldquo;Found&rdquo;</strong> &mdash; one careful step at a
+          time.</p>
+
+        <h3>Setup</h3>
+        <ol>
+          <li>Lay a long, <strong>thin, winding line</strong> of masking tape across the floor &mdash; add curves and
+            zig-zags to make it nice and wobbly.</li>
+          <li>Tape the <strong>&ldquo;Lost&rdquo;</strong> sign to the floor at the start and the
+            <strong>&ldquo;Found&rdquo;</strong> sign at the finish (print both on A4 &mdash; below).</li>
+        </ol>
+
+        <h3>How to Play</h3>
+        <ul>
+          <li>Each child starts at the <strong>&ldquo;Lost&rdquo;</strong> sign and walks along the tape line, trying to
+            keep their feet on the line the whole way home.</li>
+          <li>If they wobble and <strong>step off the line, they go back to the start</strong> and try again.</li>
+          <li>When they reach the <strong>&ldquo;Found&rdquo;</strong> sign, everyone cheers &mdash;
+            <strong>&ldquo;Welcome home!&rdquo;</strong></li>
+          <li>Let everyone have turns; make the line curvier or narrower for older children.</li>
+        </ul>
+        <div class="leader-note"><strong>Leader note:</strong> The wobbly walk shows that the son&rsquo;s journey home
+          wasn&rsquo;t easy &mdash; but he kept going, the father was waiting, and every child makes it home in the
+          end.</div>
+
+        <h3 style="margin-top:16px;">Floor Signs (print on A4)</h3>
+        <p>Print both and tape them to the floor at each end of the tape line.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;">
+          <div style="flex:1;min-width:220px;">
+            <img src="media/week-5/images/lost-sign-week-5.png" alt="Lost floor sign preview"
+              style="width:100%;border-radius:8px;border:1px solid #ccc;display:block;" />
+            <a href="media/week-5/pdfs/lost-sign-week-5.pdf" download="Lost-Sign-Week-5.pdf"
+              style="display:inline-block;margin-top:8px;background:#1a8c4e;color:#fff;font-size:13px;font-weight:700;padding:8px 16px;border-radius:7px;text-decoration:none;">&#11015; Lost sign (PDF)</a>
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <img src="media/week-5/images/found-sign-week-5.png" alt="Found floor sign preview"
+              style="width:100%;border-radius:8px;border:1px solid #ccc;display:block;" />
+            <a href="media/week-5/pdfs/found-sign-week-5.pdf" download="Found-Sign-Week-5.pdf"
+              style="display:inline-block;margin-top:8px;background:#1a8c4e;color:#fff;font-size:13px;font-weight:700;padding:8px 16px;border-radius:7px;text-decoration:none;">&#11015; Found sign (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Craft -->
+    <div class="segment seg-craft">
+      <div class="segment-header">
+        <div class="seg-icon">&#127912;</div>
+        <div class="seg-header-title">Craft &ndash; Running Father Slider</div>
+        <div class="seg-time">10 min</div>
+      </div>
+      <div class="segment-body">
+        <div class="leader-note"><strong>Leader note:</strong> Start the background playlist here and let it play
+          quietly while the children work on their craft. This week&rsquo;s song is <em>&ldquo;Our Good
+          Father.&rdquo;</em></div>
+        <!-- Background playlist: press Play once; it auto-advances through every song and loops -->
+        <div id="playlist"
+          style="border:1px solid #ddd;border-radius:8px;padding:14px 16px;max-width:420px;background:#fafafa;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+            <button id="pl-toggle" type="button"
+              style="border:none;background:#1a8c4e;color:#fff;font-size:13px;font-weight:700;padding:6px 14px;border-radius:6px;cursor:pointer;">&#9654;
+              Play</button>
+            <button id="pl-prev" type="button"
+              style="border:none;background:#eee;color:#333;font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;">&#9664;&#9664;</button>
+            <button id="pl-next" type="button"
+              style="border:none;background:#eee;color:#333;font-size:12px;padding:6px 10px;border-radius:6px;cursor:pointer;">&#9654;&#9654;</button>
+            <span id="pl-now" style="font-size:13px;color:#555;"></span>
+          </div>
+          <ol id="pl-list" style="display:none;"></ol>
+        </div>
+        <audio id="pl-audio"></audio>
+        <script>
+          (function () {
+            /* ==== EDIT THIS LIST: one line per song. Files live in the shared Playlist/ folder ==== */
+            var tracks = [
+              { title: "Listen Up!", src: "Playlist/01-listen-up.mp3" },
+              { title: "Sand Pile Blues", src: "Playlist/02-sand-pile-blues.mp3" },
+              { title: "Ready, Set, Go!", src: "Playlist/03-ready-set-go.mp3" },
+              { title: "Good and Faithful Shepherd", src: "Playlist/04-good-and-faithful-shepherd.mp3" },
+              { title: "Lord, Help Us Forgive", src: "Playlist/05-lord-help-us-forgive.mp3" },
+              { title: "Love Like You", src: "Playlist/06-love-like-you.mp3" },
+              { title: "Our Good Father", src: "Playlist/07-our-good-father.mp3" },
+              { title: "Givers Like God", src: "Playlist/08-givers-like-god.mp3" },
+              { title: "Gracious Invitation", src: "Playlist/09-gracious-invitation.mp3" },
+              { title: "Lost Is Found", src: "Playlist/10-lost-is-found.mp3" },
+              { title: "Welcome In", src: "Playlist/11-welcome-in.mp3" },
+              { title: "Everybody Needs You", src: "Playlist/12-everybody-needs-you.mp3" },
+              { title: "Be Ready", src: "Playlist/13-be-ready.mp3" }
+            ];
+            /* ======================================================================== */
+            var audio = document.getElementById('pl-audio');
+            var listEl = document.getElementById('pl-list');
+            var nowEl = document.getElementById('pl-now');
+            var toggleBtn = document.getElementById('pl-toggle');
+            var i = 0;
+            tracks.forEach(function (t, idx) {
+              var li = document.createElement('li');
+              li.textContent = t.title;
+              li.style.cursor = 'pointer';
+              li.onclick = function () { i = idx; load(true); };
+              listEl.appendChild(li);
+            });
+            function highlight() {
+              [].forEach.call(listEl.children, function (li, idx) {
+                li.style.fontWeight = idx === i ? '700' : '400';
+                li.style.color = idx === i ? '#1a8c4e' : '#333';
+              });
+              nowEl.textContent = tracks[i] ? 'Now playing: ' + tracks[i].title : '';
+            }
+            function load(play) { audio.src = tracks[i].src; highlight(); if (play) audio.play(); }
+            function setBtn() {
+              toggleBtn.innerHTML = audio.paused ? '▶ Play' : '⏸ Pause';
+            }
+            function togglePlay() {
+              if (!audio.src) load(false);
+              if (audio.paused) audio.play(); else audio.pause();
+            }
+            toggleBtn.onclick = togglePlay;
+            document.getElementById('pl-prev').onclick = function () { i = (i - 1 + tracks.length) % tracks.length; load(true); };
+            document.getElementById('pl-next').onclick = function () { i = (i + 1) % tracks.length; load(true); };
+            audio.onended = function () { i = (i + 1) % tracks.length; load(true); }; /* loops back to the first song */
+            audio.onplay = setBtn;
+            audio.onpause = setBtn;
+            load(false);
+            setBtn();
+          })();
+        </script>
+        <p style="margin-top:14px;">The father saw his son <em>a long way off</em> and <strong>ran</strong> to him. In
+          this craft the father really runs &mdash; each child slides him along the village and watches him race all the
+          way to his son!</p>
+
+        <h3>Before the Session</h3>
+        <ul>
+          <li>Print the <strong>village scene</strong> (one per child) on A4 card. Along the faint line across the
+            ground, cut a <strong>slot</strong> &mdash; a craft-knife slit works best &mdash; for the father to slide
+            through.</li>
+          <li>Print the <strong>running-father figures</strong> &mdash; there are 12 fathers on a page, so print only as
+            many pages as your group needs (often just one or two).</li>
+          <li>Have craft (paddle-pop) sticks, scissors, sticky tape or glue, and crayons ready.</li>
+        </ul>
+
+        <h3>Materials (per child)</h3>
+        <ul>
+          <li>Village scene printed on A4 cardstock (with the slot cut)</li>
+          <li>One running-father figure</li>
+          <li>A craft / paddle-pop stick</li>
+          <li>Sticky tape or a glue stick</li>
+          <li>Crayons or textas</li>
+        </ul>
+
+        <h3>Steps</h3>
+        <ol>
+          <li>Colour the village scene and the running father.</li>
+          <li>Cut out the running-father figure.</li>
+          <li>Tape or glue the father to the top of a craft stick.</li>
+          <li>From <em>behind</em> the scene, push the stick up through the slot so the father stands on the ground.</li>
+          <li>Slide the stick along the slot and watch the father <strong>run</strong> across the village all the way to
+            his son &mdash; &ldquo;Welcome home!&rdquo;</li>
+          <li>Say the verse together: <em>&ldquo;He was lost, and is found.&rdquo; &mdash; Luke 15:24.</em></li>
+        </ol>
+        <div class="leader-note"><strong>Leader tip:</strong> Pre-cut the slots before class for the youngest children
+          &mdash; a craft knife on a cutting mat gives the cleanest slit.</div>
+
+        <h3 style="margin-top:16px;">Village Scene (print on A4 card)</h3>
+        <p>One per child. Colour it, then cut a slot along the line across the ground so the father can slide across to
+          his son.</p>
+        <div style="margin-top:10px;">
+          <img src="media/week-5/images/running-father-scene-week-5.png" alt="Village scene craft template preview"
+            style="width:100%;max-width:520px;border-radius:8px;border:1px solid #ccc;display:block;" />
+        </div>
+        <a href="media/week-5/pdfs/running-father-scene-week-5.pdf" download="Running-Father-Scene-Week-5.pdf"
+          style="display:inline-block;margin-top:12px;background:#1a8c4e;color:#ffffff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:7px;text-decoration:none;">
+          &#11015; Download the Village Scene (PDF)
+        </a>
+
+        <h3 style="margin-top:16px;">Running-Father Figures (cut out)</h3>
+        <p>There are 12 fathers on the page &mdash; print only as many pages as you need for your group (often just one
+          or two). Cut out one father per child to glue onto a craft stick.</p>
+        <div style="margin-top:10px;">
+          <img src="media/week-5/images/running-father-figures-week-5.png" alt="Running father cut-out figures preview"
+            style="width:100%;max-width:340px;border-radius:8px;border:1px solid #ccc;display:block;" />
+        </div>
+        <a href="media/week-5/pdfs/running-father-figures-week-5.pdf" download="Running-Father-Figures-Week-5.pdf"
+          style="display:inline-block;margin-top:12px;background:#1a8c4e;color:#ffffff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:7px;text-decoration:none;">
+          &#11015; Download the Father Figures (PDF)
+        </a>
+      </div>
+    </div>
+
+    <!-- Parent Take-Home -->
+    <div class="segment seg-craft" style="margin-top:16px;">
+      <div class="segment-header" style="background:#5b3fa0;">
+        <div class="seg-icon">&#128203;</div>
+        <div class="seg-header-title">Parent Take-Home &ndash; Follow Up at Home</div>
+      </div>
+      <div class="segment-body">
+        <p>Print one per child to send home. Preview below &mdash; use the button to download the printable sheet.</p>
+        <div style="margin-top:10px;">
+          <img src="media/week-5/images/parent-sheet-week-5.png" alt="Parent take-home sheet preview"
+            style="width:100%;max-width:420px;border-radius:8px;border:1px solid #ccc;display:block;" />
+        </div>
+        <a href="media/week-5/pdfs/parent-sheet-week-5.pdf" download="Parent-Sheet-Week-5.pdf"
+          style="display:inline-block;margin-top:12px;background:#5b3fa0;color:#ffffff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:7px;text-decoration:none;">
+          &#11015; Download the Parent Sheet (PDF)
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      Parables of Jesus &middot; The Fields Church &middot; Week 5 of 8
+    </div>
+
+  </div><!-- /content -->
+</body>
+
+</html>

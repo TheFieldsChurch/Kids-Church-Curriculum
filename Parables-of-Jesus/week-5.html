@@ -125,7 +125,14 @@
         <p>Eight questions to recap the video, one at a time &mdash; tap an answer, get instant feedback, and keep going
           until you reach <strong>&ldquo;Well Done!&rdquo;</strong> Great on the big screen for the whole group to play
           together.</p>
-        <a class="video-btn" href="week-5-quiz.html" target="_blank" style="background:#5b3fa0;">&#9654;&#xFE0E; Play the Prodigal Son Quiz</a>
+        <a class="video-btn" id="quiz-open" href="week-5-quiz.html" target="_blank" style="background:#5b3fa0;">&#9654;&#xFE0E; Play the Prodigal Son Quiz</a>
+        <script>
+          // Open the quiz via script so its "Close" button can close the tab (and reveal this lesson behind it).
+          (function () {
+            var q = document.getElementById('quiz-open');
+            if (q) q.addEventListener('click', function (e) { e.preventDefault(); window.open('week-5-quiz.html', '_blank'); });
+          })();
+        </script>
 
         <div class="jesus-box">
           <p><span class="jc-label">Jesus Connection:</span> In this story the father is like God. Even though the son

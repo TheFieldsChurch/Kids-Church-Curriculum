@@ -125,11 +125,46 @@
     cursor: pointer;
     margin-top: 10px;
   }
+  .close-btn {
+    background: #8a8a8a;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 26px;
+    font-size: 0.95em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+  .close-hint { color: #888; font-size: 0.9em; margin: 4px 0 0 0; }
+  .back-btn {
+    display: inline-block;
+    background: #3a7d6e;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-size: 1.02em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .top-back {
+    display: inline-block;
+    text-decoration: none;
+    color: #5b3fa0;
+    font-weight: 700;
+    font-size: 0.95em;
+    margin-bottom: 6px;
+  }
+  .top-back:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 
 <div class="quiz-card">
+
+  <a class="top-back" href="week-5.html">&#8592; Back to the lesson</a>
 
   <div id="quizBody" class="quiz-body">
     <div class="quiz-title">Parables of Jesus &middot; Week 5 &middot; The Prodigal Son</div>
@@ -151,6 +186,9 @@
     <h1 class="well-done-title">Well Done!!</h1>
     <p class="well-done-sub">No matter what we do, God loves us &mdash; just like the father who ran to welcome his son home.</p>
     <button class="replay-btn" id="replayBtn">Play Again</button>
+    <a class="back-btn" href="week-5.html">&#8592; Back to the lesson</a>
+    <button class="close-btn" id="closeBtn">Close</button>
+    <p class="close-hint" id="closeHint" style="display:none;">All done! You can close this tab now.</p>
   </div>
 
 </div>
@@ -311,6 +349,12 @@ document.getElementById('replayBtn').addEventListener('click', () => {
   wellDoneScreen.classList.remove('show');
   quizBody.classList.remove('hide');
   renderQuestion();
+});
+
+document.getElementById('closeBtn').addEventListener('click', () => {
+  window.close();
+  // Some browsers won't close a tab they didn't open themselves; show a gentle hint if so.
+  setTimeout(() => { document.getElementById('closeHint').style.display = 'block'; }, 250);
 });
 
 renderQuestion();

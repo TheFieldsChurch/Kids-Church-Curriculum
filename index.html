@@ -1,27 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kids Church Curriculum</title>
-</head>
-<body>
-    <h2>Bible Heroes</h2>
-    <a href="Bible-Heroes/week-1.html"> Week 1: Noah</a><br>
-    <a href="Bible-Heroes/week-2.html"> Week 2: David</a><br>
-    <a href="Bible-Heroes/week-3.html"> Week 3: Esther</a><br>
-    <a href="Bible-Heroes/week-4.html"> Week 4: Daniel</a><br>
-    <a href="Bible-Heroes/week-5.html"> Week 5: Mary</a><br>
-    <a href="Bible-Heroes/week-6.html"> Week 6: Jesus</a><br>
+  <title>Kids Church Curriculum | The Fields Church</title>
+  <style>
+    :root {
+      --red: #e8462a;
+      --red-d: #b5341d;
+      --teal: #3a7d6e;
+      --teal-d: #2c5f54;
+      --ink: #2c3e50;
+      --muted: #6b7280;
+      --bg: #f4f1ea;
+      --card: #ffffff;
+      --line: #e6e0d4;
+    }
 
-    <h2>Parables of Jesus</h2>
-    <a href="Parables-of-Jesus/week-1.html"> Week 1: The Sower</a><br>
-    <a href="Parables-of-Jesus/week-2.html"> Week 2: The Wise and Foolish Builders</a><br>
-    <a href="Parables-of-Jesus/week-3.html"> Week 3: The Mustard Seed</a><br>
-    <a href="Parables-of-Jesus/week-4.html"> Week 4: The Lost Sheep</a><br>
-    <a href="Parables-of-Jesus/week-5.html"> Week 5: The Prodigal Son</a><br>
-    <a href="Parables-of-Jesus/week-6.html"> Week 6: The Pharisee and the Tax Collector</a><br>
-    <a href="Parables-of-Jesus/week-7.html"> Week 7: The Unforgiving Servant</a><br>
-    <a href="Parables-of-Jesus/week-8.html"> Week 8: The Good Samaritan</a><br>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .hero {
+      background: var(--red);
+      color: #fff;
+      padding: 30px 22px 34px;
+      text-align: center;
+    }
+    .hero-shield { width: 56px; height: 56px; margin-bottom: 6px; }
+    .hero h1 { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: .3px; }
+    .hero p { margin: 6px 0 0; font-size: 14px; opacity: .92; }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 26px 18px 46px; }
+
+    .series { margin-top: 30px; }
+    .series:first-child { margin-top: 8px; }
+
+    .series-head {
+      display: flex; align-items: center; gap: 12px;
+      margin: 0 0 14px;
+    }
+    .series-shield { width: 34px; height: 34px; flex: 0 0 auto; }
+    .series-head h2 { margin: 0; font-size: 20px; font-weight: 800; }
+    .series-head .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(44,62,80,.12);
+      border-color: #d3ccbc;
+    }
+    .chip {
+      flex: 0 0 auto;
+      width: 46px; height: 46px;
+      border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #fff; line-height: 1;
+    }
+    .chip .wk { font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: .9; }
+    .chip .no { font-size: 20px; font-weight: 900; }
+    .heroes .chip { background: var(--teal); }
+    .parables .chip { background: var(--red); }
+
+    .card .title { font-size: 15px; font-weight: 700; }
+
+    .card.soon {
+      pointer-events: none;
+      opacity: .6;
+      background: #f7f4ee;
+      border-style: dashed;
+    }
+    .card.soon .chip { background: #b9b3a4; }
+    .card.soon .title small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); }
+
+    .foot {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 34px;
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .card { padding: 10px; gap: 9px; flex-direction: column; text-align: center; }
+      .card .title { font-size: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <svg class="hero-shield" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#ffffff" opacity="0.16" />
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="none"
+        stroke="rgba(255,255,255,0.85)" stroke-width="1.6" />
+      <path d="M17 24l5 5 10-11" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+    <h1>Kids Church Curriculum</h1>
+    <p>The Fields Church &middot; Sunday school lessons</p>
+  </div>
+
+  <div class="wrap">
+
+    <!-- Parables of Jesus -->
+    <div class="series parables">
+      <div class="series-head">
+        <svg class="series-shield" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#e8462a" />
+          <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="900" fill="white"
+            font-family="Arial">P</text>
+        </svg>
+        <h2>Parables of Jesus</h2>
+        <span class="count">8 weeks</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="Parables-of-Jesus/week-1.html"><span class="chip"><span class="wk">Week</span><span class="no">1</span></span><span class="title">The Sower</span></a>
+        <a class="card" href="Parables-of-Jesus/week-2.html"><span class="chip"><span class="wk">Week</span><span class="no">2</span></span><span class="title">The Wise and Foolish Builders</span></a>
+        <a class="card" href="Parables-of-Jesus/week-3.html"><span class="chip"><span class="wk">Week</span><span class="no">3</span></span><span class="title">The Mustard Seed</span></a>
+        <a class="card" href="Parables-of-Jesus/week-4.html"><span class="chip"><span class="wk">Week</span><span class="no">4</span></span><span class="title">The Lost Sheep</span></a>
+        <a class="card" href="Parables-of-Jesus/week-5.html"><span class="chip"><span class="wk">Week</span><span class="no">5</span></span><span class="title">The Prodigal Son</span></a>
+        <a class="card" href="Parables-of-Jesus/week-6.html"><span class="chip"><span class="wk">Week</span><span class="no">6</span></span><span class="title">The Pharisee and the Tax Collector</span></a>
+        <a class="card" href="Parables-of-Jesus/week-7.html"><span class="chip"><span class="wk">Week</span><span class="no">7</span></span><span class="title">The Unforgiving Servant</span></a>
+        <a class="card" href="Parables-of-Jesus/week-8.html"><span class="chip"><span class="wk">Week</span><span class="no">8</span></span><span class="title">The Good Samaritan</span></a>
+      </div>
+    </div>
+
+    <!-- Bible Heroes -->
+    <div class="series heroes">
+      <div class="series-head">
+        <svg class="series-shield" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#3a7d6e" />
+          <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="900" fill="white"
+            font-family="Arial">B</text>
+        </svg>
+        <h2>Bible Heroes</h2>
+        <span class="count">6 weeks</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="Bible-Heroes/week-1.html"><span class="chip"><span class="wk">Week</span><span class="no">1</span></span><span class="title">Noah</span></a>
+        <a class="card" href="Bible-Heroes/week-2.html"><span class="chip"><span class="wk">Week</span><span class="no">2</span></span><span class="title">David</span></a>
+        <a class="card" href="Bible-Heroes/week-3.html"><span class="chip"><span class="wk">Week</span><span class="no">3</span></span><span class="title">Esther</span></a>
+        <a class="card" href="Bible-Heroes/week-4.html"><span class="chip"><span class="wk">Week</span><span class="no">4</span></span><span class="title">Daniel</span></a>
+        <a class="card" href="Bible-Heroes/week-5.html"><span class="chip"><span class="wk">Week</span><span class="no">5</span></span><span class="title">Mary</span></a>
+        <a class="card" href="Bible-Heroes/week-6.html"><span class="chip"><span class="wk">Week</span><span class="no">6</span></span><span class="title">Jesus</span></a>
+      </div>
+    </div>
+
+    <div class="foot">The Fields Church &middot; Glenquarry, NSW</div>
+
+  </div>
+
 </body>
+
 </html>

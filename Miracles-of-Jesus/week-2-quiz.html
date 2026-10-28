@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesus Calms the Storm - Quiz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    background: linear-gradient(135deg, #fdf6e3 0%, #f5e6c8 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .quiz-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    max-width: 600px;
+    width: 100%;
+    padding: 32px 28px;
+    text-align: center;
+  }
+  .quiz-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #4a7c3f;
+    margin-bottom: 16px;
+  }
+  .progress {
+    font-size: 14px;
+    font-weight: 700;
+    color: #b8860b;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .progress-bar {
+    background: #f0e0c0;
+    border-radius: 8px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .progress-fill {
+    background: #e8462a;
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.3s ease;
+  }
+  h2.question {
+    color: #5b3fa0;
+    font-size: 1.4em;
+    margin: 0 0 24px 0;
+    line-height: 1.3;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option-btn {
+    background: #f7f3ec;
+    border: 2px solid #e0d6c4;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 1.05em;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    color: #333;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: #3a7d6e;
+    background: #ecf5f1;
+  }
+  .option-btn:disabled {
+    opacity: 0.4;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+  .feedback-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .feedback-screen.show { display: flex; }
+  .quiz-body.hide { display: none; }
+  .feedback-icon { font-size: 4em; }
+  .feedback-title { font-size: 1.8em; font-weight: 800; margin: 0; }
+  .feedback-title.correct { color: #3a7d6e; }
+  .feedback-title.wrong { color: #c0392b; }
+  .feedback-why { color: #555; font-size: 1.02em; margin: 0; max-width: 460px; line-height: 1.5; }
+  .next-btn {
+    background: #3a7d6e;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 32px;
+    font-size: 1.05em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .next-btn.wrong { background: #c0392b; }
+  .well-done-screen { display: none; flex-direction: column; align-items: center; gap: 16px; }
+  .well-done-screen.show { display: flex; }
+  .stars { font-size: 2.5em; letter-spacing: 6px; }
+  .well-done-title { font-size: 2.2em; font-weight: 900; color: #e8462a; margin: 0; }
+  .well-done-sub { color: #555; font-size: 1.1em; margin: 0; max-width: 460px; line-height: 1.5; }
+  .replay-btn {
+    background: #5b3fa0;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 32px;
+    font-size: 1.05em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .close-btn {
+    background: #8a8a8a;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 26px;
+    font-size: 0.95em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+  .close-hint { color: #888; font-size: 0.9em; margin: 4px 0 0 0; }
+  .back-btn {
+    display: inline-block;
+    background: #3a7d6e;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-size: 1.02em;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .top-back {
+    display: inline-block;
+    text-decoration: none;
+    color: #5b3fa0;
+    font-weight: 700;
+    font-size: 0.95em;
+    margin-bottom: 6px;
+  }
+  .top-back:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="quiz-card">
+
+  <a class="top-back" href="week-2.html">&#8592; Back to the lesson</a>
+
+  <div id="quizBody" class="quiz-body">
+    <div class="quiz-title">Miracles of Jesus &middot; Week 2 &middot; Jesus Calms the Storm</div>
+    <div class="progress" id="progressText">Question 1 of 6</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:17%;"></div></div>
+    <h2 class="question" id="questionText"></h2>
+    <div class="options" id="optionsContainer"></div>
+  </div>
+
+  <div class="feedback-screen" id="feedbackScreen">
+    <div class="feedback-icon" id="feedbackIcon">🎉</div>
+    <h2 class="feedback-title" id="feedbackTitle">Correct!</h2>
+    <p class="feedback-why" id="feedbackWhy"></p>
+    <button class="next-btn" id="nextBtn">Next Question</button>
+  </div>
+
+  <div class="well-done-screen" id="wellDoneScreen">
+    <div class="stars">⭐⭐⭐</div>
+    <h1 class="well-done-title">Well Done!!</h1>
+    <p class="well-done-sub">Jesus is so powerful that even the wind and the waves obey Him. When we&rsquo;re scared, we can trust Him!</p>
+    <button class="replay-btn" id="replayBtn">Play Again</button>
+    <a class="back-btn" href="week-2.html">&#8592; Back to the lesson</a>
+    <button class="close-btn" id="closeBtn">Close</button>
+    <p class="close-hint" id="closeHint" style="display:none;">All done! You can close this tab now.</p>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Where did Jesus and His friends want to go in the boat?",
+    options: ["To the other side of the lake", "Fishing", "To a wedding", "Home to bed"],
+    correct: 0,
+    why: "Jesus said, \u201cLet\u2019s cross to the other side of the lake.\u201d"
+  },
+  {
+    q: "What was Jesus doing when the storm came?",
+    options: ["Eating", "Sleeping", "Swimming", "Rowing"],
+    correct: 1,
+    why: "Jesus was fast asleep in the boat!"
+  },
+  {
+    q: "What was happening to the boat in the storm?",
+    options: ["It was flying", "It was filling with water", "It was on fire", "It was stuck in sand"],
+    correct: 1,
+    why: "The waves were so big the boat was filling with water. They were in real danger!"
+  },
+  {
+    q: "What did the scared disciples do?",
+    options: ["Jumped out", "Went to sleep", "Woke Jesus up and said, \u201cSave us!\u201d", "Sang a song"],
+    correct: 2,
+    why: "They woke Jesus up and shouted, \u201cSave us! We\u2019re going to drown!\u201d"
+  },
+  {
+    q: "What did Jesus say to the wind and the waves?",
+    options: ["\u201cGo faster!\u201d", "\u201cBe still!\u201d", "\u201cGoodnight!\u201d", "\u201cJump!\u201d"],
+    correct: 1,
+    why: "Jesus said, \u201cBe still!\u201d \u2014 and straight away it was completely calm."
+  },
+  {
+    q: "\u201cWho is this man?\u201d the disciples asked. Who is Jesus?",
+    options: ["Just a sailor", "A magician", "The Son of God", "A fisherman"],
+    correct: 2,
+    why: "Jesus is the Son of God. Even the wind and the waves obey Him!"
+  }
+];
+
+let currentQ = 0;
+let disabledOptions = [];
+
+const quizBody = document.getElementById('quizBody');
+const feedbackScreen = document.getElementById('feedbackScreen');
+const wellDoneScreen = document.getElementById('wellDoneScreen');
+const questionText = document.getElementById('questionText');
+const optionsContainer = document.getElementById('optionsContainer');
+const progressText = document.getElementById('progressText');
+const progressFill = document.getElementById('progressFill');
+const feedbackIcon = document.getElementById('feedbackIcon');
+const feedbackTitle = document.getElementById('feedbackTitle');
+const feedbackWhy = document.getElementById('feedbackWhy');
+const nextBtn = document.getElementById('nextBtn');
+
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+let shuffledOrder = [];
+
+function renderQuestion() {
+  const item = questions[currentQ];
+  progressText.textContent = `Question ${currentQ + 1} of ${questions.length}`;
+  progressFill.style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+  questionText.textContent = item.q;
+  optionsContainer.innerHTML = '';
+
+  if (shuffledOrder.length === 0) {
+    shuffledOrder = shuffle(item.options.map((_, idx) => idx));
+  }
+
+  shuffledOrder.forEach((origIdx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = item.options[origIdx];
+    if (disabledOptions.includes(origIdx)) {
+      btn.disabled = true;
+    }
+    btn.addEventListener('click', () => selectOption(origIdx));
+    optionsContainer.appendChild(btn);
+  });
+}
+
+function selectOption(idx) {
+  const item = questions[currentQ];
+  if (idx === item.correct) {
+    showFeedback(true);
+  } else {
+    disabledOptions.push(idx);
+    showFeedback(false);
+  }
+}
+
+function showFeedback(isCorrect) {
+  const item = questions[currentQ];
+  quizBody.classList.add('hide');
+  feedbackScreen.classList.add('show');
+  if (isCorrect) {
+    feedbackIcon.textContent = '🎉';
+    feedbackTitle.textContent = 'Correct!';
+    feedbackTitle.className = 'feedback-title correct';
+    feedbackWhy.textContent = item.why;
+    nextBtn.textContent = currentQ === questions.length - 1 ? 'Finish' : 'Next Question';
+    nextBtn.className = 'next-btn';
+    nextBtn.onclick = () => {
+      feedbackScreen.classList.remove('show');
+      currentQ++;
+      disabledOptions = [];
+      shuffledOrder = [];
+      if (currentQ >= questions.length) {
+        wellDoneScreen.classList.add('show');
+      } else {
+        quizBody.classList.remove('hide');
+        renderQuestion();
+      }
+    };
+  } else {
+    feedbackIcon.textContent = '😅';
+    feedbackTitle.textContent = 'Try again!';
+    feedbackTitle.className = 'feedback-title wrong';
+    feedbackWhy.textContent = '';
+    nextBtn.textContent = 'Try Again';
+    nextBtn.className = 'next-btn wrong';
+    nextBtn.onclick = () => {
+      feedbackScreen.classList.remove('show');
+      quizBody.classList.remove('hide');
+      renderQuestion();
+    };
+  }
+}
+
+document.getElementById('replayBtn').addEventListener('click', () => {
+  currentQ = 0;
+  disabledOptions = [];
+  shuffledOrder = [];
+  wellDoneScreen.classList.remove('show');
+  quizBody.classList.remove('hide');
+  renderQuestion();
+});
+
+document.getElementById('closeBtn').addEventListener('click', () => {
+  window.close();
+  setTimeout(() => { document.getElementById('closeHint').style.display = 'block'; }, 250);
+});
+
+renderQuestion();
+</script>
+
+</body>
+</html>

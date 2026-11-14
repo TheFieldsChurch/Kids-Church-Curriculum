@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 3: Jesus Feeds the 5,000 | Miracles of Jesus</title>
+  <style>
+* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f0f0;
+      color: #222;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: #4a7c3f;
+      padding: 18px 24px 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-shield {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-text .series-tag {
+      font-size: 12px;
+      color: #c8e6c0;
+      margin-bottom: 2px;
+    }
+
+    .header-text h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+
+    .header-meta {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── MEMORY VERSE BAR ── */
+    .memory-bar {
+      background: #5b3fa0;
+      padding: 11px 24px;
+      font-size: 13.5px;
+      color: #ffffff;
+      line-height: 1.4;
+    }
+
+    .memory-bar strong {
+      color: #ffffff;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 16px 36px;
+    }
+
+    /* ── SEGMENT CARDS ── */
+    .segment {
+      background: #ffffff;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+    }
+
+    .segment-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 18px;
+    }
+
+    .seg-icon {
+      font-size: 20px;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .seg-header-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .seg-time {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    /* Segment colour themes */
+    .seg-song .segment-header {
+      background: #d4722a;
+    }
+
+    .seg-intro .segment-header {
+      background: #2e7bc4;
+    }
+
+    .seg-game .segment-header {
+      background: #3a7d6e;
+    }
+
+    .seg-bible .segment-header {
+      background: #8b3a3a;
+    }
+
+    .seg-craft .segment-header {
+      background: #b85c9e;
+    }
+
+    .segment-body {
+      padding: 16px 20px 18px;
+    }
+
+    /* ── BODY TYPOGRAPHY ── */
+    .segment-body p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .segment-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .segment-body ul,
+    .segment-body ol {
+      margin: 8px 0 10px 20px;
+    }
+
+    .segment-body li {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .segment-body h3 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #777;
+      margin: 14px 0 6px;
+    }
+
+    .segment-body h3:first-child {
+      margin-top: 0;
+    }
+
+    /* Ask blocks (blue left border, like Week 2) */
+    .ask-block {
+      border-left: 4px solid #2e7bc4;
+      background: #f0f6ff;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #1a3a5c;
+      line-height: 1.5;
+    }
+
+    .ask-block strong {
+      color: #1a3a5c;
+    }
+
+    /* Leader note box (amber) */
+    .leader-note {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 7px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 13.5px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+
+    .leader-note strong {
+      color: #b45309;
+    }
+
+    /* Tip box (green) */
+    .tip-box {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #166534;
+      line-height: 1.5;
+    }
+
+    .tip-box strong {
+      color: #15803d;
+    }
+
+    /* Question blocks */
+    .question-block {
+      background: #fdf5f5;
+      border-left: 4px solid #9e3b2e;
+      border-radius: 0 6px 6px 0;
+      padding: 11px 15px;
+      margin-bottom: 8px;
+    }
+
+    .question-block .q {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .question-block .a {
+      font-size: 13.5px;
+      color: #333;
+    }
+
+    .question-block .a .label {
+      font-weight: 700;
+      color: #c0452a;
+      font-style: normal;
+    }
+
+    /* Jesus connection */
+    .jesus-box {
+      background: #fdf5f5;
+      border: 1px solid #e8b8b0;
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin-top: 14px;
+    }
+
+    .jesus-box p {
+      font-size: 14px;
+      color: #2d1a17;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .jesus-box .jc-label {
+      font-weight: 700;
+      color: #c0452a;
+    }
+
+    /* Audio */
+    audio {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    /* Video button */
+    .video-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #8b3a3a;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .video-btn:hover {
+      background: #6b2a2a;
+    }
+
+    /* Craft placeholder */
+    .craft-placeholder {
+      background: #fdf4ff;
+      border: 2px dashed #d946ef;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+      text-align: center;
+      color: #86198f;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 8px;
+      padding: 12px 0 4px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .video-frame { width: 100%; max-width: 640px; aspect-ratio: 16 / 9; margin: 12px 0; border: 1px solid #ccc; border-radius: 10px; display: block; overflow: hidden; }
+    .video-frame[hidden] { display: none; }
+    .video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .resource-previews { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; margin: 12px 0; }
+    .resource-previews a { flex: 0 1 300px; min-width: 0; }
+    .resource-previews img { display: block; width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; }
+    .resource-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .resource-links .video-btn { margin-top: 2px; background: #5b3fa0; }
+    summary { cursor: pointer; }
+    @media (max-width: 480px) { .header { flex-wrap: wrap; } }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <svg class="header-shield" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#2e7bc4" />
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="none"
+        stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+      <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="900" fill="white"
+        font-family="Arial">M</text>
+    </svg>
+    <div class="header-text">
+      <div class="series-tag">Miracles of Jesus &middot; Week 3</div>
+      <h1>Jesus Feeds the 5,000</h1>
+    </div>
+    <div class="header-meta">Ages 4&ndash;10 &middot; 35 min</div>
+  </div>
+
+  <!-- MEMORY VERSE BAR -->
+  <div class="memory-bar">
+    <strong>Memory Verse:</strong> <em>“I am the bread that gives life. He who comes to me will never be hungry. He who believes in me will never be thirsty.”</em> — John 6:35 (ICB)
+  </div>
+
+
+  <main class="content">
+    <section class="segment seg-intro">
+      <div class="segment-header">
+        <div class="seg-icon" aria-hidden="true">👋</div>
+        <h2 class="seg-header-title">Intro – A Lunch for a Crowd</h2>
+        <div class="seg-time">5 min</div>
+      </div>
+      <div class="segment-body">
+        <div class="ask-block"><strong>Ask the group</strong> “What would you pack for lunch if you were going out for the day?”</div>
+        <div class="ask-block"><strong>Ask</strong> “What if everyone in the room needed to eat and we had only one lunch? What could we do?”</div>
+        <div class="leader-note">Recap how Jesus calmed the storm. Tell the children that today they’ll see what Jesus did when a huge crowd needed something to eat.</div>
+      </div>
+    </section>
+
+    <section class="segment seg-game">
+      <div class="segment-header">
+        <div class="seg-icon" aria-hidden="true">🎣</div>
+        <h2 class="seg-header-title">Game – Magnetic Fishing</h2>
+        <div class="seg-time">10 min</div>
+      </div>
+      <div class="segment-body">
+        <h3>Setting Up</h3>
+        <ul>
+          <li>Print the A4 fish sheet in colour, cut out the fish and slide a steel paperclip onto the nose of each fish.</li>
+          <li>Scatter them on a blue mat or inside a taped circle. Set out a basket and a child-friendly magnetic fishing rod with its magnet securely attached.</li>
+        </ul>
+        <h3>How to Play</h3>
+        <ol>
+          <li>Have the children take turns lowering the rod to catch one fish and put it in the basket.</li>
+          <li>Ask each child to name their fish’s colour or compare its size with one already caught.</li>
+          <li>Once everyone has had a turn, count the fish together. Hold up two and ask, “How many people do you think two fish could feed?”</li>
+        </ol>
+        <div class="resource-previews">
+          <a href="media/week-3/pdfs/magnetic-fishing-fish-a4.pdf">
+            <img src="media/week-3/images/magnetic-fishing-fish-a4.png" alt="A4 magnetic fishing sheet with twelve colourful fish">
+          </a>
+        </div>
+        <div class="resource-links"><a class="video-btn" href="media/week-3/pdfs/magnetic-fishing-fish-a4.pdf">Print the Colour Fish (A4 PDF)</a></div>
+      </div>
+    </section>
+
+    <section class="segment seg-bible">
+      <div class="segment-header">
+        <div class="seg-icon" aria-hidden="true">📖</div>
+        <h2 class="seg-header-title">Bible Lesson – Jesus Feeds the 5,000</h2>
+        <div class="seg-time">10 min</div>
+      </div>
+      <div class="segment-body">
+        <p><strong>Bible passage</strong> John 6:1–15</p>
+        <p>Before watching, ask children to listen for three numbers. How many loaves, fish and baskets do they hear about?</p>
+        <div class="video-frame" id="story-video">
+          <iframe src="https://www.youtube.com/embed/S6rj9cAJrWE?playsinline=1" title="Jesus Feeds the 5,000"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <p id="local-video-note" hidden>For in-page playback, open this lesson on the curriculum website. You can also watch the video on YouTube below.</p>
+        <script>
+          if (location.protocol === 'file:') {
+            document.getElementById('story-video').hidden = true;
+            document.getElementById('local-video-note').hidden = false;
+          }
+        </script>
+        <a class="video-btn" href="https://youtu.be/S6rj9cAJrWE?si=lpD9wgneQOFeNDjK" target="_blank" rel="noopener">▶ Open the Video on YouTube</a>
+
+        <h3>True or False Room Quiz</h3>
+        <p>Put a <strong>TRUE ✓</strong> sign on one side of the room and a <strong>FALSE ✗</strong> sign on the other. Point to both signs before starting. Read one statement aloud and give the children time to walk to the side they choose. Reveal the answer once everyone has chosen, then call them back to the middle.</p>
+        <ol id="quiz">
+          <li>A huge crowd followed Jesus after seeing Him heal people.</li>
+          <li>Jesus asked Andrew where they could buy bread.</li>
+          <li>A boy had five loaves of bread and two fish.</li>
+          <li>Jesus thanked God before sharing the bread.</li>
+          <li>Some people went away hungry because there wasn’t enough food.</li>
+          <li>The disciples filled two baskets with leftovers.</li>
+        </ol>
+        <details class="leader-note">
+          <summary><strong>Leader’s Answer Key</strong></summary>
+          <ol>
+            <li><strong>True.</strong> The crowd had seen Him heal sick people.</li>
+            <li><strong>False.</strong> Jesus asked Philip. Andrew told Him about the boy’s lunch.</li>
+            <li><strong>True.</strong> He had five barley loaves and two fish.</li>
+            <li><strong>True.</strong> Jesus gave thanks, then shared the bread.</li>
+            <li><strong>False.</strong> Everyone ate as much as they wanted.</li>
+            <li><strong>False.</strong> They filled twelve baskets.</li>
+          </ol>
+        </details>
+        <div class="resource-previews">
+          <a href="media/week-3/pdfs/leader-quiz-week-3.pdf">
+            <img src="media/week-3/images/leader-quiz-week-3.png" alt="Preview of the printable leader quiz and answer key">
+          </a>
+        </div>
+        <div class="resource-links">
+          <a class="video-btn" href="media/week-3/pdfs/leader-quiz-week-3.pdf">Print Leader Quiz and Answers (A4 PDF)</a>
+        </div>
+
+        <h3>The Story in Brief</h3>
+        <p>Five thousand men and many more women and children had gathered to see Jesus. A boy had just five barley loaves and two fish. Jesus asked the crowd to sit down. He gave thanks to God and shared the food. Everyone had enough to eat. Jesus asked the disciples to collect the leftovers so nothing would be wasted. They filled twelve baskets.</p>
+        <div class="jesus-box">
+          <p><span class="jc-label">Jesus Connection</span> Jesus saw that the people were hungry and cared for them. Later He said, “I am the bread that gives life.” Food keeps our bodies going each day, and Jesus gives eternal life to everyone who trusts Him.</p>
+        </div>
+        <h3>Prayer</h3>
+        <p>Dear God, thank You for the food You give us and for sending Jesus, the Bread of Life. Help us trust Him and notice when someone around us needs help. Amen.</p>
+      </div>
+    </section>
+
+    <section class="segment seg-craft">
+      <div class="segment-header">
+        <div class="seg-icon" aria-hidden="true">🎨</div>
+        <h2 class="seg-header-title">Craft – Basket and Fish-and-Loaves Wheel</h2>
+        <div class="seg-time">10 min</div>
+      </div>
+      <div class="segment-body">
+        <h3>Before the Session</h3>
+        <ul>
+          <li>Print one basket page per child on A5 cardstock and one A4 strip sheet per three children. Use actual size (100%) for both pages. Use ordinary paper for the strips so they turn easily.</li>
+          <li>Leaders cut the two black slots in the basket ahead of time. Have scissors, colouring pencils and sticky tape ready.</li>
+        </ul>
+        <h3>Steps</h3>
+        <ol>
+          <li>Colour the fish and loaves. Cut one full strip along its dashed outline, including the tape tab.</li>
+          <li>From behind, feed one end through the top slot. Lay the pictures face up across the basket and feed the end back through the bottom slot.</li>
+          <li>On the back, overlap the ends at the tab and tape them into a loose loop. Keep the picture side facing outward and the strip flat between the slots.</li>
+          <li>Slide the strip down gently to bring the next picture into the basket. Retell the miracle as the pictures go around.</li>
+        </ol>
+        <div class="resource-previews">
+          <a href="media/week-3/pdfs/basket-craft-a5.pdf">
+            <img src="media/week-3/images/craft.png" alt="A5 Jesus and basket craft preview with the John 6:11 verse">
+          </a>
+          <a href="media/week-3/pdfs/fish-and-loaves-strips-a4.pdf">
+            <img src="media/week-3/images/fish-and-loaves-strips.png" alt="A4 colouring sheet with three strips of five loaves and two fish">
+          </a>
+        </div>
+        <div class="resource-links">
+          <a class="video-btn" href="media/week-3/pdfs/basket-craft-a5.pdf">Print the Jesus and Basket Page (A5 PDF)</a>
+          <a class="video-btn" href="media/week-3/pdfs/fish-and-loaves-strips-a4.pdf">Print the Fish and Loaves Strips (A4 PDF)</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="segment seg-craft">
+      <div class="segment-header" style="background:#5b3fa0">
+        <div class="seg-icon" aria-hidden="true">📋</div>
+        <h2 class="seg-header-title">Parent Take-Home Sheet</h2>
+      </div>
+      <div class="segment-body">
+        <p>Print one copy per child to send home after the session.</p>
+        <div class="resource-previews">
+          <a href="media/week-3/pdfs/parent-sheet-week-3.pdf">
+            <img src="media/week-3/images/parent-sheet-week-3.png" alt="Week 3 parent take-home sheet preview">
+          </a>
+        </div>
+        <div class="resource-links">
+          <a class="video-btn" href="media/week-3/pdfs/parent-sheet-week-3.pdf" download>Download Parent Take-Home Sheet (PDF)</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">Miracles of Jesus Series · The Fields Church · Week 3 of 4</footer>
+  </main>
+</body>
+</html>
+

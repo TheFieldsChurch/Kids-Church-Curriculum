@@ -279,7 +279,8 @@
     }
 
     /* Video button */
-    .video-btn {
+    .video-btn,
+    .back-to-index {
       display: inline-block;
       margin-top: 10px;
       background: #8b3a3a;
@@ -291,7 +292,8 @@
       text-decoration: none;
     }
 
-    .video-btn:hover {
+    .video-btn:hover,
+    .back-to-index:hover {
       background: #6b2a2a;
     }
 

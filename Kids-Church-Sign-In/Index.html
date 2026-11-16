@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kids Church Sign-In - The Fields Church</title>
+<style>
+:root{
+  --blue:      #5C3D4E;
+  --blue-dk:   #3D2535;
+  --blue-hdr:  #5C3D4E;
+  --green:     #6B8C6B;
+  --green-lt:  #E8EFE6;
+  --red:       #8B4A42;
+  --red-lt:    #F5E8E6;
+  --amber:     #B8895A;
+  --amber-lt:  #F5EBE0;
+  --purple:    #7A8A7A;
+  --purple-lt: #EAF0EA;
+  --accent:    #8B5A6B;
+  --accent-lt: #F0E8EC;
+  --slate:     #3A3D35;
+  --muted:     #7A7D72;
+  --bg:        #F4F1EC;
+  --white:     #FDFBF8;
+  --border:    #D6D0C8;
+  --row-alt:   #EEE9E2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--slate);min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+header{background:#5C3D4E;color:#FFFFFF;padding:14px 20px;flex-shrink:0;}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;}
+.hdr-title{font-size:22px;font-weight:800;letter-spacing:-0.3px;}
+.hdr-sub{font-size:12px;opacity:.7;margin-top:3px;}
+.hdr-date{font-size:12px;opacity:.7;text-align:right;}
+
+/* TABS */
+.tabs{display:flex;background:#5C3D4E;border-bottom:3px solid rgba(255,255,255,.15);flex-shrink:0;}
+.tab{flex:1;padding:12px 6px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;color:rgba(255,255,255,.7);border-bottom:3px solid transparent;margin-bottom:-3px;transition:all .15s;user-select:none;white-space:nowrap;}
+.tab.active{color:#FFFFFF;border-bottom-color:#B8895A;}
+
+/* PANELS */
+.panel{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.panel.active{display:flex;}
+
+/* STATS BAR */
+.stats-bar{background:#3D2535;color:#FFFFFF;padding:14px 20px;display:flex;align-items:center;gap:0;flex-shrink:0;}
+.stat{flex:1;padding-right:20px;}
+.stat-val{font-size:28px;font-weight:800;line-height:1;}
+.stat-lbl{font-size:11px;opacity:.6;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.btn-new-person{background:var(--accent);color:var(--white);border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.btn-new-person:active{opacity:.85;}
+
+/* SEARCH */
+.search-wrap{padding:14px 16px 0;flex-shrink:0;}
+.search-box{width:100%;height:46px;border:2px solid var(--border);border-radius:10px;padding:0 14px 0 40px;font-size:15px;color:var(--slate);background:var(--white);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394A3B8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
+.search-box:focus{outline:none;border-color:var(--accent);}
+.search-box::placeholder{color:#94A3B8;}
+
+/* CARD GRID */
+.quick-scroll{flex:1;overflow-y:auto;padding:14px 16px 10px;}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px;margin-top:4px;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px;}
+.quick-card{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:14px 10px;cursor:pointer;transition:all .15s;text-align:center;}
+.quick-card:active{transform:scale(.97);}
+.quick-card.signed-in{border-color:var(--green);background:var(--green-lt);}
+.quick-card.signed-out{border-color:#94A3B8;background:#F8FAFC;opacity:.6;}
+.qc-name{font-size:15px;font-weight:700;margin-bottom:3px;}
+.qc-detail{font-size:11px;color:var(--muted);}
+.qc-status{font-size:11px;font-weight:700;margin-top:7px;}
+.signed-in .qc-status{color:var(--green);}
+.signed-out .qc-status{color:var(--muted);}
+.qc-btn-row{display:flex;gap:5px;margin-top:8px;justify-content:center;}
+.qc-so{font-size:11px;font-weight:700;background:var(--accent);color:var(--white);border:none;border-radius:6px;padding:5px 8px;cursor:pointer;}
+.qc-lbl{font-size:11px;font-weight:700;background:var(--green-lt);color:var(--green);border:none;border-radius:6px;padding:5px 8px;cursor:pointer;}
+
+/* BOTTOM BUTTONS */
+.bottom-btns{padding:12px 16px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;background:var(--bg);}
+.btn-full{width:100%;height:52px;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-upload{background:var(--green);color:var(--white);}
+.btn-labels{background:var(--amber);color:var(--white);}
+.btn-full:active{opacity:.85;}
+
+/* LOADING */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:16px;color:var(--muted);}
+.spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* REGISTER */
+.manage-top{background:var(--white);border-bottom:2px solid var(--border);padding:14px 16px;flex-shrink:0;}
+.manage-top h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px;}
+.form-row{display:flex;gap:8px;flex-wrap:wrap;}
+.form-row input,.form-row select{flex:1;min-width:120px;height:48px;border:2px solid var(--border);border-radius:10px;padding:0 12px;font-size:15px;color:var(--slate);background:var(--bg);-webkit-appearance:none;appearance:none;}
+.form-row input:focus,.form-row select:focus{outline:none;border-color:var(--accent);background:var(--white);}
+.form-row input::placeholder{color:#94A3B8;}
+.dob-wrap{flex:1;min-width:150px;display:flex;flex-direction:column;gap:3px;}
+.dob-wrap label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+.dob-wrap input{width:100%;height:48px;border:2px solid var(--border);border-radius:10px;padding:0 12px;font-size:15px;color:var(--slate);background:var(--bg);}
+.dob-wrap input:focus{outline:none;border-color:var(--accent);background:var(--white);}
+.btn-primary{height:48px;padding:0 20px;background:#5C3D4E;color:#FFFFFF;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.btn-primary:active{background:#3D2535;}
+.reg-list{flex:1;overflow-y:auto;padding:12px 16px;}
+.reg-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.ri-name{font-size:15px;font-weight:700;}
+.ri-detail{font-size:13px;color:var(--muted);margin-top:2px;}
+.reg-actions{display:flex;gap:6px;flex-shrink:0;margin-left:10px;}
+.btn-edit{border:none;border-radius:7px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;background:var(--green-lt);color:#5C3D4E;}
+.btn-rm{border:none;border-radius:7px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;background:var(--red-lt);color:var(--red);}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty-state .icon{font-size:48px;margin-bottom:12px;}
+.medical-badge{display:inline-block;background:var(--amber-lt);color:#6B3D1E;border:1px solid #C9A882;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;margin-top:5px;}
+.empty-state p{font-size:15px;line-height:1.6;}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--white);border-radius:16px;padding:20px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2);}
+.modal-box h2{font-size:18px;font-weight:800;margin-bottom:4px;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.modal-field{margin-bottom:12px;}
+.modal-field label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
+.modal-field input,.modal-field select{width:100%;height:48px;border:2px solid var(--border);border-radius:10px;padding:0 12px;font-size:15px;background:var(--bg);color:var(--slate);-webkit-appearance:none;appearance:none;}
+.modal-field input:focus,.modal-field select:focus{outline:none;border-color:var(--accent);background:var(--white);}
+.modal-field input::placeholder{color:#94A3B8;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px;}
+.btn-m{height:44px;padding:0 20px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;border:none;}
+.btn-m-cancel{background:var(--bg);color:var(--slate);}
+.btn-m-blue{background:#5C3D4E;color:#FFFFFF;}
+.btn-m-green{background:var(--green);color:var(--white);}
+.btn-m-amber{background:var(--accent);color:var(--white);}
+.label-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.lp{border:2px dashed var(--border);border-radius:8px;padding:12px;text-align:center;cursor:pointer;transition:all .15s;}
+.lp.selected{border-color:var(--green);background:var(--green-lt);}
+.lp-name{font-size:17px;font-weight:800;margin-bottom:3px;}
+.lp-detail{font-size:11px;color:var(--muted);}
+.lp-church{font-size:10px;color:var(--muted);margin-top:3px;font-style:italic;}
+
+/* PRINT - desktop Chrome/Firefox with Brother QL-810W driver via USB
+   Set printer default to DK-11209 (62mm x 29mm) landscape in Windows
+   Control Panel > Devices and Printers > Brother QL-810W > Printer Preferences */
+@media print {
+  @page {
+    size: 62mm 29mm landscape;
+    margin: 0;
+  }
+  body > *:not(#labelPrintArea) { display: none !important; }
+  #labelPrintArea { display: block !important; margin: 0; padding: 0; }
+  .print-label {
+    width: 62mm;
+    height: 29mm;
+    padding: 2mm 4mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .pl-name    { font-size: 15pt; font-weight: 800; line-height: 1.1; margin-bottom: 1mm; white-space: nowrap; }
+  .pl-detail  { font-size: 8pt; color: #444; line-height: 1.3; }
+  .pl-contact { font-size: 10pt; color: #444; line-height: 1.3; }
+  .pl-church  { font-size: 6.5pt; color: #888; margin-top: 1mm; }
+}
+#labelPrintArea { display: none; }
+
+/* Keep controls usable with a touch keyboard and in iPad split view. */
+body { min-height: 100dvh; }
+header, .stats-bar, .search-wrap, .quick-scroll, .manage-top, .reg-list, .bottom-btns, .tabs {
+  padding-left: max(14px, env(safe-area-inset-left));
+  padding-right: max(14px, env(safe-area-inset-right));
+}
+.bottom-btns { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+.tab { background: transparent; border: 0; border-bottom: 3px solid transparent; min-height: 46px; font-size: 16px; }
+.search-box, .form-row input, .dob-wrap input, .modal-field input { font-size: 16px; min-width: 0; }
+input[type="date"] { appearance: auto; -webkit-appearance: auto; text-align: left; }
+.qc-so, .qc-lbl, .btn-edit, .btn-rm, .btn-new-person { min-height: 44px; }
+.qc-lbl { background: var(--white); color: var(--blue-dk); }
+.qc-btn-row { flex-wrap: wrap; }
+.quick-card, .reg-item, .lp { overflow-wrap: anywhere; }
+button.quick-card { width: 100%; font: inherit; color: inherit; }
+button:focus-visible { outline: 3px solid #b8895a; outline-offset: 2px; }
+.app-message { padding: 10px 16px; background: var(--green-lt); color: var(--blue-dk); font-size: 14px; }
+.app-message.error { background: var(--red-lt); color: var(--red); }
+.modal-message:empty { display: none; }
+.modal-message { margin: 12px 0; border-radius: 8px; }
+.btn-upload { background: var(--blue); }
+.btn-labels { color: var(--blue-dk); background: var(--amber-lt); }
+.modal-box { max-height: 90dvh; overscroll-behavior: contain; }
+body:has(.modal-overlay.open) { overflow: hidden; }
+.manage-top .form-row { align-items: end; }
+@media (max-width: 520px) {
+  .hdr-title { font-size: 19px; }
+  .stats-bar { gap: 10px; }
+  .stat { padding-right: 0; }
+  .stat-val { font-size: 24px; }
+  .btn-new-person { padding: 8px 12px; }
+  .form-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .form-row input, .form-row .dob-wrap { width: 100%; }
+  .reg-item { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .reg-actions { margin-left: 0; }
+  .quick-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 142px), 1fr)); }
+}
+@media print { .app-message { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-title">Kids Church Sign-In</div>
+      <div class="hdr-sub">The Fields Church</div>
+    </div>
+    <div class="hdr-date" id="dateBadge">-</div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" aria-pressed="true" onclick="switchTab('signin')">Sign In</button>
+  <button class="tab" aria-pressed="false" onclick="switchTab('manage')">Register</button>
+</div>
+<p class="app-message" id="appMessage" role="status" aria-live="polite">Connecting to Google Sheets…</p>
+
+<!-- SIGN IN -->
+<div class="panel active" id="panel-signin">
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-val" id="presentCount">0</div>
+      <div class="stat-lbl">Present today</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="registeredCount">0</div>
+      <div class="stat-lbl">Registered</div>
+    </div>
+    <button class="btn-new-person" onclick="openNewPersonModal()">+ New Child</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search-box" id="searchBox" type="search" aria-label="Search by name" placeholder="Search by name..." autocomplete="off" autocorrect="off" oninput="renderQuick()">
+  </div>
+  <div class="quick-scroll" id="quickScroll">
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
+  <div class="bottom-btns">
+    <button class="btn-full btn-labels" onclick="openLabelModal()">Print Name Tags</button>
+    <button class="btn-full btn-upload" onclick="loadData(true)">Refresh Attendance</button>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div class="panel" id="panel-manage">
+  <div class="manage-top">
+    <h2>Add a child manually</h2>
+    <div class="form-row">
+      <input id="m-name" aria-label="Child’s full name"     type="text" placeholder="Child's full name" autocomplete="off" autocorrect="off">
+      <div class="dob-wrap">
+        <label for="m-dob">Date of birth</label>
+        <input id="m-dob" type="date">
+      </div>
+      <input id="m-guardian" aria-label="Parent or guardian" type="text" placeholder="Parent / guardian" autocomplete="off" autocorrect="off">
+      <input id="m-contact" aria-label="Contact number"  type="tel"  placeholder="Contact number"    autocomplete="off">
+      <input id="m-medical" aria-label="Medical notes" type="text" placeholder="Allergies / medical notes (optional)" autocomplete="off" autocorrect="off" style="flex:1 1 100%;">
+      <button class="btn-primary" onclick="addToRegister()">+ Add</button>
+    </div>
+  </div>
+  <div class="reg-list" id="regList"></div>
+</div>
+
+<!-- NEW PERSON MODAL -->
+<div class="modal-overlay" id="newPersonModal">
+  <div class="modal-box">
+    <h2>New Child</h2>
+    <p class="modal-sub">Fill in the details below. We will remember them for next time.</p>
+    <div class="modal-field"><label for="np-name">Child's full name</label>
+      <input id="np-name" type="text" placeholder="e.g. Emma Smith" autocomplete="off" autocorrect="off"></div>
+    <div class="modal-field"><label for="np-dob">Date of birth</label>
+      <input id="np-dob" type="date"></div>
+    <div class="modal-field"><label for="np-guardian">Parent / guardian name</label>
+      <input id="np-guardian" type="text" placeholder="e.g. Sarah Smith" autocomplete="off" autocorrect="off"></div>
+    <div class="modal-field"><label for="np-contact">Contact number</label>
+      <input id="np-contact" type="tel" placeholder="e.g. 0412 345 678" autocomplete="off"></div>
+    <div class="modal-field"><label for="np-medical">Allergies / Medical Notes</label>
+      <input id="np-medical" type="text" placeholder="e.g. Peanut allergy (leave blank if none)" autocomplete="off" autocorrect="off"></div>
+    <p class="app-message modal-message" role="status"></p>
+    <div class="modal-actions">
+      <button class="btn-m btn-m-cancel" onclick="closeNewPersonModal()">Cancel</button>
+      <button class="btn-m btn-m-amber"  onclick="signInNewChild()">Sign In and Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <h2>Edit Child</h2>
+    <p class="modal-sub">Update the details below.</p>
+    <div class="modal-field"><label for="e-name">Full name</label>
+      <input id="e-name" type="text" autocorrect="off"></div>
+    <div class="modal-field"><label for="e-dob">Date of birth</label>
+      <input id="e-dob" type="date"></div>
+    <div class="modal-field"><label for="e-guardian">Parent / guardian</label>
+      <input id="e-guardian" type="text" autocorrect="off"></div>
+    <div class="modal-field"><label for="e-contact">Contact number</label>
+      <input id="e-contact" type="tel"></div>
+    <div class="modal-field"><label for="e-medical">Allergies / Medical Notes</label>
+      <input id="e-medical" type="text" placeholder="Leave blank if none" autocomplete="off" autocorrect="off"></div>
+    <p class="app-message modal-message" role="status"></p>
+    <div class="modal-actions">
+      <button class="btn-m btn-m-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-m btn-m-blue"   onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- LABEL MODAL -->
+<div class="modal-overlay" id="labelModal">
+  <div class="modal-box">
+    <h2>Print Name Tags</h2>
+    <p class="modal-sub">Tap to select or deselect. All signed-in children are pre-selected.</p>
+    <div class="label-grid" id="labelGrid"></div>
+    <div class="modal-actions" style="flex-direction:column;gap:8px;margin-top:16px;">
+      <button class="btn-m" style="width:100%;height:50px;font-size:16px;background:#3D2535;color:#FFFFFF;border:none;border-radius:9px;font-weight:700;cursor:pointer;" onclick="printLabels()">Print Name Tags</button>
+      <button class="btn-m btn-m-cancel" style="width:100%;" onclick="closeLabelModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- UPDATE PROMPT MODAL -->
+<div class="modal-overlay" id="updatePromptModal">
+  <div class="modal-box">
+    <h2>Just a quick update</h2>
+    <p class="modal-sub">We are missing a few details for <strong id="upName"></strong>. Please fill these in — we will not ask again.</p>
+    <div id="upDobWrap" class="modal-field"><label for="up-dob">Date of birth</label>
+      <input id="up-dob" type="date"></div>
+    <div class="modal-field"><label for="up-medical">Allergies / Medical Notes</label>
+      <input id="up-medical" type="text" placeholder="Leave blank if none" autocomplete="off" autocorrect="off"></div>
+    <p class="app-message modal-message" role="status"></p>
+    <div class="modal-actions">
+      <button class="btn-m btn-m-cancel" onclick="skipUpdatePrompt()">Skip for now</button>
+      <button class="btn-m btn-m-amber"  onclick="saveUpdatePrompt()">Save and Sign In</button>
+    </div>
+  </div>
+</div>
+
+<div id="labelPrintArea"></div>
+
+<script>
+var serviceDay = '';
+var busy = false;
+var registry = [];
+var signedIn  = [];
+var editingId = null;
+
+function calcAge(dob) {
+  if (!dob) return '';
+  var b;
+  var months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+  // Handle DD-Mon-YYYY format e.g. 29-Feb-2024
+  if (/^\d{1,2}-[A-Za-z]{3}-\d{4}$/.test(dob)) {
+    var p = dob.split('-');
+    var mo = months[p[1].toLowerCase()];
+    b = (mo !== undefined) ? new Date(parseInt(p[2]), mo, parseInt(p[0])) : null;
+  // Handle DD/MM/YYYY format
+  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) {
+    var p2 = dob.split('/');
+    b = new Date(parseInt(p2[2]), parseInt(p2[1])-1, parseInt(p2[0]));
+  // Handle YYYY-MM-DD format from iOS date picker
+  } else if (/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    var p3 = dob.split('-');
+    b = new Date(parseInt(p3[0]), parseInt(p3[1])-1, parseInt(p3[2]));
+  } else {
+    b = new Date(dob);
+  }
+  if (!b || isNaN(b.getTime())) return '';
+  var today = new Date();
+  var age = today.getFullYear() - b.getFullYear();
+  var m = today.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+  return age < 0 ? '' : String(age);
+}
+
+function api(params, onSaved, quiet) {
+  if (busy) {
+    if (params.action !== 'getAll') showToast('Please wait for Google Sheets, then try again.');
+    return;
+  }
+  if (params.action !== 'getAll' && !serviceDay) {
+    showToast('Connect to Google Sheets before making changes.', true);
+    return;
+  }
+  if (!window.google || !google.script || !google.script.run) {
+    showToast('Open the deployed Google Apps Script link to connect to attendance.', true);
+    hideLoading();
+    return;
+  }
+  busy = true;
+  params.day = serviceDay;
+  var mutating = params.action !== 'getAll';
+  if (mutating) showToast('Saving to Google Sheets…');
+  google.script.run.withSuccessHandler(function(result) {
+    busy = false;
+    var changed = serviceDay !== result.day ||
+      JSON.stringify(registry) !== JSON.stringify(result.registry) ||
+      JSON.stringify(signedIn) !== JSON.stringify(result.today);
+    serviceDay = result.day;
+    registry = result.registry;
+    signedIn = result.today;
+    hideLoading();
+    if (changed) {
+      renderQuick();
+      renderRegister();
+    }
+    if (!quiet || document.getElementById('appMessage').classList.contains('error')) {
+      showToast(result.message || 'Attendance is up to date in Google Sheets.');
+    }
+    if (onSaved) onSaved();
+  }).withFailureHandler(function(error) {
+    busy = false;
+    hideLoading();
+    showToast(error && error.message ? error.message : 'Could not reach Google Sheets. Refresh before trying again.', true);
+  }).attendanceRequest(params);
+}
+
+function showToast(message, error) {
+  var status = document.getElementById('appMessage');
+  status.textContent = message;
+  status.classList.toggle('error', !!error);
+  document.querySelectorAll('.modal-message').forEach(function(element) {
+    element.textContent = element.closest('.modal-overlay').classList.contains('open') ? message : '';
+    element.classList.toggle('error', !!error);
+  });
+}
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function switchTab(name) {
+  var names = ['signin','manage'];
+  var tabs  = document.querySelectorAll('.tab');
+  names.forEach(function(n, i){
+    tabs[i].classList.toggle('active', n === name);
+    tabs[i].setAttribute('aria-pressed', String(n === name));
+    var panel = document.getElementById('panel-' + n);
+    if (panel) panel.classList.toggle('active', n === name);
+  });
+  if (name === 'manage')   renderRegister();
+  if (name === 'signin')   renderQuick();
+}
+
+function updateHeader() {
+  document.getElementById('dateBadge').textContent = serviceDay ? serviceDay.split('-').reverse().join('/') : '—';
+  var present = signedIn.filter(function(c){ return c.status === 'in'; }).length;
+  document.getElementById('presentCount').textContent = present;
+  document.getElementById('registeredCount').textContent = registry.length;
+}
+
+function loadData(fromButton) {
+  if (!fromButton && document.querySelector('.modal-overlay.open')) return;
+  api({action:'getAll'}, null, !fromButton && !!serviceDay);
+}
+
+function hideLoading() {
+  var ls = document.getElementById('loadingScreen');
+  if (ls) ls.style.display = 'none';
+}
+
+// IDs also appear inside quoted action arguments in the generated cards.
+function actionId(id) { return encodeURIComponent(id).replace(/'/g, '%27'); }
+
+function surname(n) { var p = n.trim().split(' '); return p[p.length-1]; }
+
+function renderQuick() {
+  var scroll  = document.getElementById('quickScroll');
+  var query   = (document.getElementById('searchBox').value || '').toLowerCase().trim();
+  hideLoading();
+
+  if (!serviceDay) return;
+  if (!registry.length) {
+    scroll.innerHTML = '<div class="empty-state"><div class="icon">&#128105;&#8205;&#128103;</div><p>No one registered yet.<br>Tap <strong>+ New Child</strong> to add someone.</p></div>';
+    updateHeader(); return;
+  }
+
+  var filtered = registry.filter(function(c){
+    return !query || c.name.toLowerCase().indexOf(query) !== -1;
+  });
+
+  var sorted = filtered.slice().sort(function(a,b){ return surname(a.name).localeCompare(surname(b.name)); });
+  var inList = [], waitList = [], outList = [];
+  sorted.forEach(function(child){
+    var entry = null;
+    for (var i = 0; i < signedIn.length; i++){
+      if (signedIn[i].registryId === child.id){ entry = signedIn[i]; break; }
+    }
+    if (!entry)                    waitList.push({child:child, entry:null});
+    else if (entry.status === 'in') inList.push({child:child, entry:entry});
+    else                            outList.push({child:child, entry:entry});
+  });
+
+  var html = '';
+  if (!filtered.length) {
+    html = '<div class="empty-state"><div class="icon">&#128269;</div><p>No results for "' + esc(query) + '"</p></div>';
+  } else {
+    if (inList.length) {
+      html += '<div class="section-label">Signed in today</div><div class="quick-grid">';
+      inList.forEach(function(x){ html += cardHtml(x.child, x.entry, 'signed-in'); });
+      html += '</div>';
+    }
+    if (waitList.length) {
+      html += '<div class="section-label">Tap to sign in</div><div class="quick-grid">';
+      waitList.forEach(function(x){ html += cardHtml(x.child, null, 'none'); });
+      html += '</div>';
+    }
+    if (outList.length) {
+      html += '<div class="section-label">Signed out</div><div class="quick-grid">';
+      outList.forEach(function(x){ html += cardHtml(x.child, x.entry, 'signed-out'); });
+      html += '</div>';
+    }
+  }
+  scroll.innerHTML = html;
+  updateHeader();
+}
+
+function cardHtml(child, entry, state) {
+  var id = actionId(child.id), statusText = '', btns = '', cls = '';
+  var age = child.dob ? calcAge(child.dob) : (child.age || '');
+  if (state === 'signed-in') {
+    cls = 'signed-in'; statusText = 'In since ' + esc(entry.timeIn);
+    btns = '<div class="qc-btn-row">'
+      + '<button class="qc-so" onclick="event.stopPropagation();quickSignOut(\'' + id + '\')">Sign Out</button>'
+      + '<button class="qc-lbl" onclick="event.stopPropagation();printOneLabel(\'' + id + '\')">Label</button>'
+      + '</div>';
+  } else if (state === 'signed-out') {
+    cls = 'signed-out'; statusText = 'Left ' + esc(entry.timeOut);
+  } else {
+    statusText = 'Tap to sign in';
+  }
+  var click = state === 'none' ? 'onclick="quickSignIn(\'' + id + '\')"' : '';
+  var tag = state === 'none' ? 'button' : 'div';
+  return '<' + tag + ' class="quick-card ' + cls + '" ' + click + '>'
+    + '<div class="qc-name">' + esc(child.name) + '</div>'
+    + '<div class="qc-detail">' + (age ? 'Age ' + esc(age) : '') + (age && child.guardian ? ' - ' : '') + esc(child.guardian) + '</div>'
+    + '<div class="qc-status">' + statusText + '</div>'
+    + (child.medical ? '<div class="medical-badge">&#9888; ' + esc(child.medical) + '</div>' : '')
+    + btns + '</' + tag + '>';
+}
+
+
+/* UPDATE PROMPT */
+var pendingSignInId = null;
+
+function needsUpdate(child) {
+  return !child.dob || String(child.dob).trim() === '';
+}
+
+function openUpdatePrompt(child) {
+  pendingSignInId = child.id;
+  document.getElementById('upName').textContent = child.name;
+  // Show/hide DOB field depending on whether it is missing
+  var dobWrap = document.getElementById('upDobWrap');
+  if (child.dob) {
+    dobWrap.style.display = 'none';
+    document.getElementById('up-dob').value = child.dob;
+  } else {
+    dobWrap.style.display = '';
+    document.getElementById('up-dob').value = '';
+  }
+  document.getElementById('up-medical').value = child.medical || '';
+  openFormModal('updatePromptModal');
+}
+
+function openFormModal(id) {
+  var modal = document.getElementById(id);
+  modal.querySelector('.modal-message').textContent = '';
+  modal.classList.add('open');
+}
+
+function skipUpdatePrompt() {
+  document.getElementById('updatePromptModal').classList.remove('open');
+  if (pendingSignInId) {
+    doQuickSignIn(pendingSignInId);
+    pendingSignInId = null;
+  }
+}
+
+function saveUpdatePrompt() {
+  var child = registry.find(function(entry) { return entry.id === pendingSignInId; });
+  if (!child) return;
+  var dob = document.getElementById('up-dob').value || child.dob;
+  if (!dob) { alert('Please enter a date of birth.'); return; }
+  api({
+    action:'updateChild', id:child.id, name:child.name, dob:dob,
+    guardian:child.guardian, contact:child.contact,
+    medical:document.getElementById('up-medical').value
+  }, function() {
+    document.getElementById('updatePromptModal').classList.remove('open');
+    pendingSignInId = null;
+    doQuickSignIn(child.id);
+  });
+}
+
+function quickSignIn(regId) {
+  if (busy) return;
+  regId = decodeURIComponent(regId);
+  var child = null;
+  for (var i = 0; i < registry.length; i++){ if (registry[i].id === regId){ child = registry[i]; break; } }
+  if (!child) return;
+  for (var j = 0; j < signedIn.length; j++){ if (signedIn[j].registryId === regId){ showToast(child.name + ' is already signed in.'); return; } }
+  if (needsUpdate(child)) { openUpdatePrompt(child); return; }
+  doQuickSignIn(regId);
+}
+
+function doQuickSignIn(regId) {
+  api({action:'signIn', registryId:regId});
+}
+
+function quickSignOut(regId) {
+  api({action:'signOut', registryId:decodeURIComponent(regId)});
+}
+
+/* NEW PERSON MODAL */
+function openNewPersonModal() {
+  if (busy || !serviceDay) return;
+  document.getElementById('np-name').value    = '';
+  document.getElementById('np-dob').value     = '';
+  document.getElementById('np-guardian').value= '';
+  document.getElementById('np-contact').value = '';
+  openFormModal('newPersonModal');
+  document.getElementById('np-medical').value = '';
+}
+function closeNewPersonModal(){ document.getElementById('newPersonModal').classList.remove('open'); }
+
+function signInNewChild() {
+  var name     = document.getElementById('np-name').value.trim();
+  var dob      = document.getElementById('np-dob').value;
+  var guardian = document.getElementById('np-guardian').value.trim();
+  var contact  = document.getElementById('np-contact').value.trim();
+  var medical  = document.getElementById('np-medical').value.trim();
+  if (!name)     { alert('Please enter the child\'s name.'); return; }
+  if (!dob)      { alert('Please enter a date of birth.'); return; }
+  if (!guardian) { alert('Please enter a parent or guardian name.'); return; }
+  if (!contact)  { alert('Please enter a contact number.'); return; }
+  api({action:'addAndSignIn', name:name, dob:dob, guardian:guardian, contact:contact, medical:medical}, closeNewPersonModal);
+}
+
+/* REGISTER */
+function renderRegister() {
+  var list = document.getElementById('regList');
+  if (!registry.length) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">&#128103;</div>'
+      + '<p>No children registered yet.<br>They appear here after their first sign-in.</p></div>';
+    return;
+  }
+  var sorted = registry.slice().sort(function(a,b){ return surname(a.name).localeCompare(surname(b.name)); });
+  list.innerHTML = sorted.map(function(c){
+    var age = c.dob ? calcAge(c.dob) : (c.age || '');
+    var dobDisplay = c.dob ? ' (DOB: ' + esc(c.dob) + ')' : '';
+    return '<div class="reg-item">'
+      + '<div><div class="ri-name">' + esc(c.name) + '</div>'
+      + '<div class="ri-detail">' + (age ? 'Age ' + esc(age) + dobDisplay : '') + (age ? ' - ' : '') + esc(c.guardian) + (c.contact ? ' - ' + esc(c.contact) : '') + '</div>'
+      + (c.medical ? '<div class="medical-badge" style="margin-top:5px;">&#9888; ' + esc(c.medical) + '</div>' : '') + '</div>'
+      + '<div class="reg-actions">'
+        + '<button class="btn-edit" onclick="openEdit(\'' + actionId(c.id) + '\')">Edit</button>'
+        + '<button class="btn-rm"   onclick="removeFromRegister(\'' + actionId(c.id) + '\')">Remove</button>'
+      + '</div></div>';
+  }).join('');
+}
+
+function addToRegister() {
+  var name     = document.getElementById('m-name').value.trim();
+  var dob      = document.getElementById('m-dob').value;
+  var guardian = document.getElementById('m-guardian').value.trim();
+  var contact  = document.getElementById('m-contact').value.trim();
+  var medical  = document.getElementById('m-medical').value.trim();
+  if (!name||!dob||!guardian||!contact){ alert('Please fill in name, date of birth, guardian and contact.'); return; }
+  api({action:'addChild', name:name, dob:dob, guardian:guardian, contact:contact, medical:medical}, function() {
+    ['name','dob','guardian','contact','medical'].forEach(function(field) {
+      document.getElementById('m-' + field).value = '';
+    });
+  });
+}
+
+function removeFromRegister(id) {
+  if (busy) return;
+  var child = registry.find(function(entry) { return entry.id === decodeURIComponent(id); });
+  if (child && confirm('Remove ' + child.name + ' from the register?')) {
+    api({action:'removeChild', id:child.id});
+  }
+}
+
+/* EDIT MODAL */
+
+function dobToInputFormat(dob) {
+  if (!dob) return '';
+  var months = {jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dob)) return dob;
+  // DD-Mon-YYYY e.g. 29-Feb-2024
+  if (/^\d{1,2}-[A-Za-z]{3}-\d{4}$/.test(dob)) {
+    var p = dob.split('-');
+    var mo = months[p[1].toLowerCase()];
+    if (!mo) return '';
+    return p[2] + '-' + mo + '-' + (p[0].length === 1 ? '0' + p[0] : p[0]);
+  }
+  // DD/MM/YYYY
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) {
+    var p2 = dob.split('/');
+    return p2[2] + '-' + p2[1] + '-' + p2[0];
+  }
+  return dob;
+}
+
+function openEdit(id) {
+  id = decodeURIComponent(id);
+  var c = null;
+  for (var i = 0; i < registry.length; i++){ if (registry[i].id === id){ c = registry[i]; break; } }
+  if (!c) return;
+  editingId = id;
+  document.getElementById('e-name').value     = c.name;
+  document.getElementById('e-dob').value      = dobToInputFormat(c.dob || '');
+  document.getElementById('e-guardian').value = c.guardian;
+  document.getElementById('e-contact').value  = c.contact || '';
+  document.getElementById('e-medical').value  = c.medical || '';
+  openFormModal('editModal');
+}
+function closeEditModal(){ document.getElementById('editModal').classList.remove('open'); editingId = null; }
+function saveEdit() {
+  var c = null;
+  for (var i = 0; i < registry.length; i++){ if (registry[i].id === editingId){ c = registry[i]; break; } }
+  if (!c) return;
+  var name     = document.getElementById('e-name').value.trim();
+  var dob      = document.getElementById('e-dob').value;
+  var guardian = document.getElementById('e-guardian').value.trim();
+  var contact  = document.getElementById('e-contact').value.trim();
+  if (!name||!dob||!guardian||!contact){ alert('Please fill in all fields.'); return; }
+  api({action:'updateChild', id:editingId, name:name, dob:dob, guardian:guardian, contact:contact, medical:medical}, closeEditModal);
+}
+
+/* LABEL PRINT - desktop Chrome/Firefox with USB Brother QL-810W driver.
+   Uses window.print() directly on the page - no popup needed.
+   @page size is respected by desktop browsers with proper printer drivers. */
+
+function buildPrintArea(list) {
+  document.getElementById('labelPrintArea').innerHTML = list.map(function(c){
+    var age = c.dob ? calcAge(c.dob) : (c.age || '');
+    return '<div class="print-label">'
+      + '<div class="pl-name">'    + esc(c.name) + '</div>'
+      + '<div class="pl-detail">'  + (age ? 'Age ' + esc(age) + ' – ' : '') + esc(c.guardian) + '</div>'
+      + (c.contact ? '<div class="pl-contact">' + esc(c.contact) + '</div>' : '')
+      + '<div class="pl-church">The Fields Church – Kids Church</div>'
+      + '</div>';
+  }).join('');
+}
+
+function openPrintWindow(list) {
+  buildPrintArea(list);
+  window.print();
+}
+
+/* LABELS */
+function openLabelModal() {
+  if (!signedIn.length){ alert('No children are signed in today.'); return; }
+  var grid = document.getElementById('labelGrid');
+  grid.innerHTML = signedIn.map(function(c, i){
+    var age = c.dob ? calcAge(c.dob) : (c.age || '');
+    return '<div class="lp' + (c.status === 'in' ? ' selected' : '') + '" id="lp-' + i + '" onclick="this.classList.toggle(\'selected\')">'
+      + '<div class="lp-name">' + esc(c.name) + '</div>'
+      + '<div class="lp-detail">' + (age ? 'Age ' + esc(age) : '') + (age && c.guardian ? ' - ' : '') + esc(c.guardian) + '</div>'
+      + '<div class="lp-church">The Fields Church</div>'
+    + '</div>';
+  }).join('');
+  document.getElementById('labelModal').classList.add('open');
+  document.getElementById('labelModal').dataset.present = JSON.stringify(signedIn);
+}
+function closeLabelModal(){ document.getElementById('labelModal').classList.remove('open'); }
+function printLabels() {
+  var present = JSON.parse(document.getElementById('labelModal').dataset.present || '[]');
+  var selected = present.filter(function(_, i){
+    var el = document.getElementById('lp-' + i); return el && el.classList.contains('selected');
+  });
+  if (!selected.length){ alert('Please select at least one label.'); return; }
+  closeLabelModal();
+  openPrintWindow(selected);
+}
+function printOneLabel(regId) {
+  regId = decodeURIComponent(regId);
+  var entry = null;
+  for (var i = 0; i < signedIn.length; i++){ if (signedIn[i].registryId === regId){ entry = signedIn[i]; break; } }
+  if (!entry){ alert('Child not found.'); return; }
+  openPrintWindow([entry]);
+}
+
+
+/* MODAL BACKDROPS */
+['newPersonModal','editModal','labelModal','updatePromptModal'].forEach(function(id){
+  document.getElementById(id).addEventListener('click', function(e){
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+/* INIT */
+updateHeader();
+loadData();
+window.addEventListener('focus', function() { loadData(); });
+setInterval(function() {
+  if (serviceDay && !document.hidden) loadData();
+}, 45000);
+</script>
+</body>
+</html>

@@ -7,6 +7,22 @@
   <title>Week 4: Jesus Raises Lazarus | Miracles of Jesus</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    .video-frame {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 16 / 9;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .video-frame[hidden] { display: none; }
+    .video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .segment-body details { margin-bottom: 10px; }
+    .segment-body summary { cursor: pointer; }
+    .craft-preview { display: block; width: 100%; max-width: 640px; margin-top: 12px; }
+    .craft-preview img { display: block; width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; }
     @media (max-width: 480px) {
       .header { flex-wrap: wrap; }
     }
@@ -17,6 +33,8 @@
   <header class="header">
     <svg class="header-shield" viewBox="0 0 48 48" aria-hidden="true">
       <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="#2e7bc4" />
+      <path d="M24 4L6 12V24C6 33.6 14.1 42.5 24 44C33.9 42.5 42 33.6 42 24V12L24 4Z" fill="none"
+        stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
       <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="900" fill="white"
         font-family="Arial">M</text>
     </svg>
@@ -28,22 +46,27 @@
   </header>
 
   <div class="memory-bar">
-    <strong>Memory Verse</strong> <em>“I am the resurrection and the life.”</em> &mdash; John 11:25a (ICB)
+    <strong>Memory Verse:</strong> <em>“I am the resurrection and the life.”</em> &mdash; John 11:25a (ICB)
   </div>
 
   <main class="content">
     <a class="back-to-index" href="../index.html">Back to Lesson Index</a>
-    <p class="leader-note" style="margin: 0 0 16px"><strong>Draft lesson for Sunday 22 November.</strong> The activity and memory verse are suggested for review.</p>
-
     <section class="segment seg-intro">
       <div class="segment-header">
         <span class="seg-icon" aria-hidden="true">👋</span>
         <h2 class="seg-header-title">Intro – Remember the Miracles</h2>
-        <span class="seg-time">5 min</span>
+        <span class="seg-time">4 min</span>
       </div>
       <div class="segment-body">
-        <p>Give three clues, one at a time. Hold up an imaginary cup, make waves with your hands, then pretend to share bread. Let the children copy each action and name the miracle. Remind them that Jesus turned water into wine, calmed a storm and fed a huge crowd.</p>
-        <div class="ask-block"><strong>Ask the group</strong> “What do these stories show us about Jesus?”</div>
+        <p>Give three clues, one at a time. Hold up an imaginary cup, make waves with your hands, then pretend to share bread. Let the children copy each action.</p>
+        <div class="question-block">
+          <p class="q">“Which miracle does this action remind you of?”</p>
+          <p class="a"><span class="label">Possible answers</span> Cup – Jesus turned water into wine. Waves – Jesus calmed the storm. Bread – Jesus fed the crowd.</p>
+        </div>
+        <div class="question-block">
+          <p class="q">“What do these stories show us about Jesus?”</p>
+          <p class="a"><span class="label">Possible answers</span> Jesus cares when people need help. Jesus has power over the wind and waves. Jesus made sure there was enough food for everyone.</p>
+        </div>
         <p>“Today we’ll meet Jesus’ friend Lazarus and his sisters, Mary and Martha.”</p>
       </div>
     </section>
@@ -57,11 +80,45 @@
       <div class="segment-body">
         <p><strong>Bible passage</strong> John 11:1&ndash;44</p>
         <p><strong>Big idea</strong> Jesus cares when we are sad, and he has power over death.</p>
-        <h3>Tell the Story</h3>
-        <p>Lazarus was very sick. His sisters, Mary and Martha, sent a message to Jesus. By the time Jesus arrived, Lazarus had died and had been in the tomb for four days. A tomb is a place where someone’s body was laid after they died.</p>
-        <p>Martha went out to meet Jesus. Jesus told her, “I am the resurrection and the life.” When Jesus saw Mary and the people with her crying, Jesus cried too.</p>
-        <p>At the tomb, Jesus asked the people to move the stone away. Jesus thanked God for hearing him. Then he called in a loud voice, “Lazarus, come out!” <em>Pause and invite the children to say those words with you.</em> Lazarus came out, alive! He was still wrapped in strips of cloth, so Jesus told the people to take them off.</p>
-        <div class="ask-block"><strong>Ask</strong> “What did Jesus do when he saw Mary crying? What happened when he called Lazarus?”</div>
+        <h3>Watch the Story</h3>
+        <p>Ask the children to listen for the words Jesus calls out at the tomb. Play the five-minute animated story from Saddleback Kids.</p>
+        <div class="video-frame" id="story-video">
+          <iframe src="https://www.youtube.com/embed/Dca8SSxXCmM?playsinline=1"
+            title="Jesus Raises Lazarus from the Dead by Saddleback Kids"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <p id="local-video-note" hidden>Use the YouTube button to watch the video when opening this lesson as a saved file.</p>
+        <script>
+          if (location.protocol === 'file:') {
+            document.getElementById('story-video').hidden = true;
+            document.getElementById('local-video-note').hidden = false;
+          }
+        </script>
+        <a class="video-btn" href="https://youtu.be/Dca8SSxXCmM" target="_blank" rel="noopener">▶ Open the Video on YouTube</a>
+        <details class="leader-note">
+          <summary><strong>Leader’s Read-Aloud Story</strong></summary>
+          <p>Lazarus was very sick. His sisters, Mary and Martha, sent a message to Jesus. By the time Jesus arrived, Lazarus had died and had been in the tomb for four days. A tomb is a place where someone’s body was laid after they died.</p>
+          <p>Martha went out to meet Jesus. Jesus told her, “I am the resurrection and the life.” When Jesus saw Mary and the people with her crying, Jesus cried too.</p>
+          <p>At the tomb, Jesus asked the people to move the stone away. Jesus thanked God for hearing him. Then he called in a loud voice, “Lazarus, come out!” <em>Pause and invite the children to say those words with you.</em> Lazarus came out, alive! He was still wrapped in strips of cloth, so Jesus told the people to take them off.</p>
+        </details>
+        <h3>Talk About the Story</h3>
+        <div class="question-block">
+          <p class="q">“What did Jesus do when he saw Mary crying?”</p>
+          <p class="a"><span class="label">Possible answers</span> Jesus cried too. He was sad with Mary.</p>
+        </div>
+        <div class="question-block">
+          <p class="q">“What did Jesus call out at the tomb?”</p>
+          <p class="a"><span class="label">Possible answer</span> “Lazarus, come out!”</p>
+        </div>
+        <div class="question-block">
+          <p class="q">“What happened when Jesus called Lazarus?”</p>
+          <p class="a"><span class="label">Possible answers</span> Lazarus came back to life. He walked out of the tomb, still wrapped in cloth.</p>
+        </div>
+        <div class="jesus-box">
+          <p><span class="jc-label">Jesus Connection</span> Jesus cried with Mary and her friends. We can talk to Jesus when we are sad too. When Jesus raised Lazarus, he showed that he has power over death.</p>
+        </div>
         <h3>Practise the Memory Verse</h3>
         <p>Say it in two parts and have the children echo you. Explain that <em>resurrection</em> means being raised to life. Say the whole verse together, then invite the older children to try it from memory.</p>
         <h3>Pray Together</h3>
@@ -71,20 +128,60 @@
 
     <section class="segment seg-game">
       <div class="segment-header">
+        <span class="seg-icon" aria-hidden="true">🕹️</span>
+        <h2 class="seg-header-title">Game – Wrap and Unwrap Lazarus</h2>
+        <span class="seg-time">5 min</span>
+      </div>
+      <div class="segment-body">
+        <p><strong>What you need</strong> One small roll of toilet paper per team, a timer and a clear space.</p>
+        <h3>Set Up</h3>
+        <p>Divide the children into two or more teams. Each team picks a willing volunteer to stand in the middle as Lazarus. Give each team an equal amount of paper. A leader can play Lazarus if the younger children prefer to do the wrapping.</p>
+        <div class="leader-note">Wrap loosely over clothing around the middle only. Keep the head, neck, arms and legs clear. Teams walk as they wrap. Pause straight away if a volunteer wants to stop.</div>
+        <h3>Round 1 – Wrap Lazarus</h3>
+        <ol>
+          <li>On “Go!”, start the timer and let teams wrap while their Lazarus stands still. Teammates can take turns passing the roll around.</li>
+          <li>The first team to use up its paper wins the wrapping round. At one minute, call “Stop!” and have everyone put down their rolls. If no team has finished, the team with the least paper left wins.</li>
+        </ol>
+        <h3>Round 2 – Lazarus, Come Forth!</h3>
+        <ol>
+          <li>Call “Lazarus, come forth!” All teams start unwrapping together.</li>
+          <li>Lazarus can tear the paper while teammates help peel it away. The first team to free its Lazarus wins the unwrapping round.</li>
+        </ol>
+        <p>Pick up the paper together, then ask the group:</p>
+        <div class="question-block">
+          <p class="q">“What did Jesus ask the people to do after Lazarus came out of the tomb?”</p>
+          <p class="a"><span class="label">Possible answers</span> Take off the strips of cloth. Unwrap Lazarus so he could go free.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="segment seg-game">
+      <div class="segment-header">
         <span class="seg-icon" aria-hidden="true">🙋</span>
         <h2 class="seg-header-title">True or False Room Quiz</h2>
-        <span class="seg-time">8 min</span>
+        <span class="seg-time">4 min</span>
       </div>
       <div class="segment-body">
         <p>Choose a True side and a False side of the room. Read one statement at a time and invite children to walk to their answer or point from their spot. Read the answer aloud before moving on.</p>
         <ol>
-          <li>Mary and Martha were Lazarus’ sisters. <strong>True.</strong></li>
-          <li>Lazarus was at home when Jesus arrived. <strong>False.</strong> He was in the tomb.</li>
-          <li>Jesus cried when he saw Mary and the others crying. <strong>True.</strong></li>
-          <li>The people moved a big wooden door away from the tomb. <strong>False.</strong> They moved a stone.</li>
-          <li>Jesus called, “Lazarus, come out!” <strong>True.</strong></li>
-          <li>Lazarus came out of the tomb alive. <strong>True.</strong></li>
+          <li>Mary and Martha were Lazarus’ sisters.</li>
+          <li>Lazarus was at home when Jesus arrived.</li>
+          <li>Jesus cried when he saw Mary and the others crying.</li>
+          <li>The people moved a big wooden door away from the tomb.</li>
+          <li>Jesus called, “Lazarus, come out!”</li>
+          <li>Lazarus came out of the tomb alive.</li>
         </ol>
+        <details class="leader-note">
+          <summary><strong>Leader’s Answer Key</strong></summary>
+          <ol>
+            <li><strong>True.</strong> Mary and Martha sent a message to Jesus when Lazarus was sick.</li>
+            <li><strong>False.</strong> Lazarus had been in the tomb for four days.</li>
+            <li><strong>True.</strong> Jesus cried too.</li>
+            <li><strong>False.</strong> The people moved a stone.</li>
+            <li><strong>True.</strong> Jesus called out in a loud voice.</li>
+            <li><strong>True.</strong> Lazarus was alive and still wrapped in strips of cloth.</li>
+          </ol>
+        </details>
       </div>
     </section>
 
@@ -96,19 +193,27 @@
       </div>
       <div class="segment-body">
         <h3>Before the Session</h3>
-        <p>Gather A4 cardstock, crayons, masking tape and grey paper. For younger children, cut out a large grey paper circle and a simple Lazarus figure for each child. Draw a tomb with an arched doorway on each sheet. Make the doorway big enough for the figure, and the circle big enough to cover the doorway.</p>
+        <p>Print pages 1 and 2 in colour on A4 cardstock at 100% (Actual Size). Cut out the four pieces on page 2. Use sticky tape and thin double-sided foam tape, or use scrap cardstock spacers with ordinary tape. Assemble the craft ahead of time for younger children.</p>
         <h3>Make and Retell</h3>
         <ol>
-          <li>Colour the tomb and draw short lines across Lazarus’ clothes to show the strips of cloth.</li>
-          <li>Leave the Lazarus figure loose so you can move him. Cover the doorway with the grey paper stone.</li>
-          <li>Ask a leader to tape one edge of the stone to the cardstock so the stone can swing open like a flap.</li>
-          <li>Lay the page flat, place Lazarus in the doorway and close the flap. Retell the story by opening the flap, saying “Lazarus, come out!” and moving the figure out of the tomb.</li>
+          <li>Fold the stone’s wide tab where it meets the stone. Tape the tab behind the rock pocket so the stone opens to the right.</li>
+          <li>Lay the slider across the foot of the doorway with Lazarus on the right. Line up the little bump below Lazarus just to the left of the lower tape mark.</li>
+          <li>Lay the guide across the slider and attach both ends to the marked boxes. The slider should move freely through the middle. Match the pocket to the printed sky and sand, then attach just its top and bottom edges.</li>
+          <li>Open the stone and pull the left tab until it stops. Pull the right tab to hide Lazarus again, then close the stone. Leave room for the right tab to stick out past the page when Lazarus is hidden.</li>
         </ol>
+        <a class="craft-preview" href="media/week-4/pdfs/lazarus-pull-tab-craft-a4.pdf#page=3">
+          <img src="media/week-4/images/lazarus-assembly-guide.png" alt="Four illustrated assembly steps showing the stone hinge, both slider tabs and the two marked spots for taping down the guide.">
+        </a>
+        <a class="craft-preview" href="media/week-4/pdfs/lazarus-pull-tab-craft-a4.pdf">
+          <img src="media/week-4/images/lazarus-pull-tab-craft.png" alt="Assembled craft with Jesus, Mary, Martha and two onlookers in the foreground, and Lazarus standing at the open tomb. The John 11:25a memory verse is printed in the sand below.">
+        </a>
+        <a class="video-btn" href="media/week-4/pdfs/lazarus-pull-tab-craft-a4.pdf">Print the Lazarus Pull-Tab Craft (A4 PDF)</a>
+        <a class="video-btn" href="media/week-4/craft/lazarus-silhouette-cut-files.zip" download>Download Silhouette Cutting Files (ZIP)</a>
       </div>
     </section>
 
-    <footer class="footer">The Fields Church &middot; Kids Church Curriculum</footer>
     <a class="back-to-index" href="../index.html">Back to Lesson Index</a>
+    <footer class="footer">Miracles of Jesus Series &middot; The Fields Church &middot; Week 4 of 4</footer>
   </main>
 </body>
 
